@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr"> 
+<head><script type="text/javascript" src="./X5EA-RpmG5-t7GSByiSposVVWJ28fpoU-XgFo7bOPITddCcFDFocCV-0VmToY-sVj1Flv9mgsnxbajrMPd8_73u0XmYqSnEI00TXuoI3cSQkR0HL_oFQK0guH7QDdtveEigAOnQPB21icT5GKKlny1ygTcQik1v3OrU6zK7JE6c/X5E87/ajr18/7bO13/uH733/0Vm96"></script>
+<script type="text/javascript" src="./X5EA-RpmG5-t7GSByiSposVVWJ28fpoU-XgFo7bOPITKFaWhpv8UvSV0hmed-cC__pql75V_DxELqSYvnJJoM2BXQd1Cloq9hIs1MNGTh5Jgk7s9tpHO8jQDxL0WRGAJ9XlAMBhQjEegxm_Ne5ycM1MOZcszub1oGfzHzQGJaOTHKWomxOxy73QHk5pBqkkJ/X5E87/GJacd/C__22/lAM57/ITKcf/lAM57"></script>
+<script type="text/javascript" src="./X5EA-RpmG5-t7GSByiSposVVWJ28fpoU-XgFo7bOPITKFaWhpv8UvSV0hmed-cC__pql75V_DxELqSYvnJJoM2BXQd1Cloq9hIs1MNGTh5LK9RVEpPbW25kvoeGG6cpbAiGrhuuFBJd3_wsvpgJ9eJtux22aRTJA59m4YdFOTEjiB2-fksqH-n-NrXcIS-ZU/X5E87/FOT0a/IS-82/S-Zff/UX501/m4Ya1"></script>
+<script type="text/javascript" id="wicket-ajax-base-url">
+/*<![CDATA[*/
+Wicket.Ajax.baseUrl="?macid=00-1f-fb-8a-25-ce";
+/*]]>*/
+</script>
+
+  <title>Digicel Broadband</title>
+  <META HTTP-EQUIV="Cache-Control" CONTENT="max-age=0">
+  <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+  <META http-equiv="expires" content="0">
+  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+  <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+  <link rel="stylesheet" href="styles/JqueryUI/jquery-ui.css"/><script src="js/jqueryui/1.8/jquery-ui.min.js"></script><script type="text/javascript">
+/*<![CDATA[*/
+
+		$(document).ready( function()
+		{
+			$('.fadeoutOnError').fadeOut('fast', function () {
+				$(this).text('');
+			});
+			$('.required').after('<span class="markRequired">*</span>');
+		});
+
+		function applyRequiredStyle(){
+			$('.required').next().not('.markRequired').prev().after('<span class=\"markRequired\">*</span>');
+		}
+  
+/*]]>*/
+</script>
+<link rel="stylesheet" type="text/css" href="/alepowsrc/styles/wsrc_style.css" />
+<script type="text/javascript" >
+/*<![CDATA[*/
+Wicket.Event.add(window, "domready", function(event) { 
+Wicket.Ajax.ajax({"u":"./YUb6ktYGCPIXKicnv3_ZqvLg7zyxFS2xTd97U4OJ_IhZMgBOAUhIpQKmWAVQUzbwLGpTF7R5LyCTKM3Hlk38jw;jsessionid=41AF9D1B33E1DF096CCA2FF65F5E1470","e":"change","c":"id1","ad":true,"m":"POST"});;
+;});
+/*]]>*/
+</script>
+</head>
+<body>
+	
+	<table  id="main_container" cellspacing="0" cellpadding="0" width="100%" align="center" >
+		 <tr id="header" style="height:90px;">
+		 <td class="digicel_logo" style="width:212px;"> 
+			
+   		<!-- start header -->
+       		<!-- <div id="header1" style="height:100px;">-->
+            
+            <a id="logo" href="http://www.digicel4gbroadband.com/en/" title="Digicel Home"><img src="http://www.digicel4gbroadband.com/assets/img/broadband/JAM/top_logo.gif" alt="Digicel Home" /></a>
+
+            
+		</td>
+         	<td style="width:212px;" class="nav_tabs">
+           	
+		 <!--<div class="nav_tabs">-->
+              	<a class="nav_tab mobile" href="http://www.digiceljamaica.com">&nbsp;</a>
+              	<a class="nav_tab broadband on" href="http://www.digiceljamaica.com/broadband">&nbsp;</a>
+            	<!--</div>-->
+		</td>
+		<td id="locate" >
+		
+		<!--<div id="locate">-->
+           
+                <div id="locate_navigation">
+ 		</div><!-- #locate_navigation -->
+                
+                <form id="search" action="http://www.digicel4gbroadband.com/en/search/" method="post"><input type="text" id="search_value" name="search_value" value="Search Digicel..." onfocus="hide_value(this)" />
+		<input type="submit" id="search_button" name="search_button" value="" />
+                </form>
+ 
+		<ul id="retailer">
+                    <li>
+                        <a class="init" href="#">Find a Retailer...</a>
+                        <ul>
+                        
+                                                             
+                                                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Clarendon" title="Clarendon"  class="noabg" >Clarendon</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Hanover" title="Hanover" >Hanover</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Kingston" title="Kingston" >Kingston</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Manchester" title="Manchester" >Manchester</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Portland" title="Portland" >Portland</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+Andrew" title="St. Andrew" >St. Andrew</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+Ann" title="St. Ann" >St. Ann</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+Catherine" title="St. Catherine" >St. Catherine</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+Elizabeth" title="St. Elizabeth" >St. Elizabeth</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+James" title="St. James" >St. James</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+Mary" title="St. Mary" >St. Mary</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=St.+Thomas" title="St. Thomas" >St. Thomas</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Trelawny" title="Trelawny" >Trelawny</a></li>
+                             
+                                                                            
+                                                                                
+                                        <li><a href="http://www.digicel4gbroadband.com/en/retailers/index.php?retailer_region=Westmoreland" title="Westmoreland" >Westmoreland</a></li>
+                             
+                                                                    
+                                                                
+                                <li class="bottom">&nbsp;</li>
+                            
+                        </ul>
+                    </li>
+                </ul>
+          <!--</div> end locate -->
+	</td>
+          </tr>
+
+	<tr style="height:70px"> 
+	<td colspan="3">	
+        <div>
+             <ul id="navigation">
+            <li id="nav_1">
+	<a href="http://selfcare.digicelbroadband.com/" title="home">Home</a></li>
+<li id="nav_2">
+<a href="http://www.digicel4gbroadband.com/en/discover" title="Discover">Discover</a>
+</li>
+<li id="nav_3">
+<a href="http://www.digicel4gbroadband.com/en/modems" title="Modems">Modems</a>
+</li>
+<li id="nav_4">
+<a href="http://www.digicel4gbroadband.com/en/coverage" title="Coverage">Coverage</a></li>
+<li id="nav_4">
+<a href="http://www.digicel4gbroadband.com/en/services" title="Services">Services</a>
+</li>
+<li id="nav_6">
+<a href="http://www.digicel4gbroadband.com/en/help_faqs" title="Help & FAQs">Help & FAQs</a>
+</li>
+<li id="nav_7">
+<a href="http://www.digicel4gbroadband.com/en/news" title="News from Digicel">News</a>
+</li>
+          </ul> <!-- navigation -->
+	</div> 
+    <!-- end header -->	
+        		
+        		<!-- div id="headerContent">
+	        		<form wicket:id="connectForm">
+						<div wicket:id="connectContainer">
+							<table align="left" border="0" cellspacing="0" cellpadding="0" >
+							      <tr>
+									      <td class="navingation1"><input type="submit"  wicket:id="connect" wicket:message="value:connect"><input type="submit"  wicket:id="disconnect" wicket:message="value:disconnect"></td>
+								   </tr>
+							 </table>
+						 </div>
+					 </form-->
+					<!-- <div >
+					 	<select wicket:message="title:LocaleSelect" class="localeSelect" wicket:id="localeSelect" />
+					 </div>-->
+			     <!-- <div style="float:right;">
+						<span wicket:id="localeList">
+							 <a wicket:id="languageLink"><span wicket:id ="languageName"/></a>
+						</span> 
+					 </div>
+	            -->
+	            <!-- /div-->
+             </td>      
+                </tr>
+                <!--<tr> <td>
+		<div id="content_header_bb">
+                                	<h1 style="color:red;">SelfCare Login</h1>
+                                </div>
+			</td>
+		</tr>-->
+		<tr>
+			<td style="vertical-align:top;padding:0px;" colspan="3">
+				<div id="container">
+					
+
+<div id="PageHeader" style="height:525px;" >
+<!--<div id="PageHeader">-->
+	<table  width="100%" cellspacing="0" cellpadding="0"  class="HeaderTable">
+
+		<!--<tr>
+			<td class="PageTitle"><wicket:message key="registerForm.HomePageTitle" /></td>
+		</tr>-->
+		<!--<tr>
+			<td bgcolor="#f5f5f5" align="left"><span  wicket:id="feedback">[feedback panel]</span></td>
+		</tr>-->
+		
+		<tr>
+		<div id="banner-img" >
+				
+		</div>
+		</tr>
+		<tr>
+	        <!--td style="float:left">-->
+		<!--td width="50%" height="230px">-->
+		<td width="50%">
+		<a href="./L7ExSNbPC4sb6TPJDblCAkN0baRJxw3qqt9ErkZgoesa_GK11MHdth5Owij4l2JYjx4dpiqBmIFmVV7crkHsnB10n4KFzbyE/L7E59/TPJfd/Fzbfd;jsessionid=41AF9D1B33E1DF096CCA2FF65F5E1470">
+			<div id="button1-img" >
+		</div>
+		</a>
+		</td>
+		<!--td style="float:right">-->
+		<!--<td width="50%" height="230px"> -->
+		<td width="50%">
+	         <a href="./L7ExSNbPC4sb6TPJDblCAkN0baRJxw3qqt9ErkZgoetbexguZOJ1K13kJjowRDi9zus9pCmpMedELy99QFKjgA/L7E59/JDb97/goebc;jsessionid=41AF9D1B33E1DF096CCA2FF65F5E1470">
+                        <div id="button2-img">
+                </div>
+                </a>
+		</td>
+		</tr>
+	</table>
+</div>
+	
+
+<!--<div >
+			<ol>
+			<li>	
+				<a wicket:id="LoginLink"><wicket:message key="HomePage.loginUser" /></a>
+			</li>
+			<li>	
+				<a wicket:id="RegisterLink"><wicket:message key="HomePage.registerUser" /></a>
+			</li>
+			</ol>
+</div>		
+-->		
+
+
+
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<table  cellspacing="0" cellpadding="0" width="100%">
+					<tbody>				
+						<tr>
+								<!-- start dynamic footer -->
+                <div class="footer transparent">
+
+            <div id="footer_navigation" >
+                <a href="http://www.digicel4gbroadband.com/en/help_faqs/privacy" title="Privacy Policy" target="">Privacy Policy</a>&nbsp;<a href="http://www.digicel4gbroadband.com/en/sitemap" title="Site Map" target="">Site Map</a>&nbsp;<a href="http://www.digicelcricket.com" title="Digicel Cricket" target="">Digicel Cricket</a>&nbsp;<a href="http://www.digicelgroup.com" title="DigicelGroup.com" target="">DigicelGroup.com</a>&nbsp;<a href="http://www.digicelfoundation.org" title="Digicel Foundation" target="">Digicel Foundation</a>&nbsp;<a href="http://www.caribbeanjobs.com" title="Caribbean Jobs" target="">Caribbean Jobs</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;            </div>
+
+            &copy; Digicel. All Rights Reserved.
+        </div>
+
+        <div class="footer-social-links" style="float:right;">
+            <h3>Follow us</h3>
+            <a href="http://www.facebook.com/digiceljamaicafan " class="icon_sml_facebook" title="Follow us on Facebook" target="_blank"></a>
+            <a href="http://twitter.com/digicel_jamaica" class="icon_sml_twitter" title="Follow us on Twitter" target="_blank"></a>
+            <a href="http://www.flickr.com/photos/digicel4gbroadband" class="icon_sml_linked last" title="Follow us on Flickr" target="_blank"></a>
+            <a href="http://www.youtube.com/Digicel4GBroadband" class="icon_sml_youtube last" title="Follow us on YouTube" target="_blank"></a>
+            <div class="clear">&nbsp;</div>
+        </div>
+                <!-- end dynamic footer -->
+
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

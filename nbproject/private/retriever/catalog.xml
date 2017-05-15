@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://javafx.com/javafx/8.0.121" uri="173.225.240.133_/alepowsrc/.macid_00-1f-fb-8a-25-ce"/>
+    <system systemId="http://javafx.com/javafx/8.0.102" uri="www.oracle.com/technetwork/java/javase/overview/index.html"/>
+</catalog>

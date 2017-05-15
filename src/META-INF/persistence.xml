@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="inventrPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>entity.User</class>
+    <class>entity.Request</class>
+    <class>entity.Receivable</class>
+    <class>entity.Address</class>
+    <class>entity.ContactDetail</class>
+    <class>entity.Country</class>
+    <class>entity.Item</class>
+    <class>entity.Supplier</class>
+    <class>entity.Unit</class>
+    <class>entity.Location</class>
+    <class>entity.Person</class>
+    <class>entity.UserRole</class>
+    <class>entity.Email</class>
+    <class>entity.PhoneNumber</class>
+    <class>entity.Rule</class>
+    <class>entity.Category</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/inventr_db?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <!-- <property name="javax.persistence.sql-load-script-source" value="META-INF/init_script.sql"/> -->
+    </properties>
+  </persistence-unit>
+</persistence>
