@@ -76,8 +76,8 @@
                           <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jProgressBar1" min="-2" pref="288" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                          <Component id="jProgressBar1" min="-2" pref="285" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>

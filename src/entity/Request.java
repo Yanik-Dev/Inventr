@@ -6,6 +6,7 @@
 
 package entity;
 
+import constant.RequestStatus;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
@@ -28,8 +29,8 @@ public class Request implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
     private double amount;
-    @OneToMany(targetEntity = Item.class)
-    private List<Item> item;
+    @ManyToOne(targetEntity = Item.class)
+    private Item item;
     @ManyToOne(targetEntity=User.class)
     private User requester;
     @ManyToOne(targetEntity=User.class)
@@ -39,6 +40,7 @@ public class Request implements Serializable {
     private String dateRequested;
     private String dateIssued;
     private String dateVerified;
+    private RequestStatus status;
     
     /**
      * @return the requester
@@ -150,15 +152,29 @@ public class Request implements Serializable {
     /**
      * @return the item
      */
-    public List<Item> getItem() {
+    public Item getItems() {
         return item;
     }
 
     /**
      * @param item the item to set
      */
-    public void setItem(List<Item> item) {
+    public void setItems(Item item) {
         this.item = item;
+    }
+
+    /**
+     * @return the status
+     */
+    public RequestStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(RequestStatus status) {
+        this.status = status;
     }
 
    

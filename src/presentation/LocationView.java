@@ -6,7 +6,7 @@
 package presentation;
 
 import common.MessageBox;
-import entity.Category;
+import entity.Location;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,14 +17,14 @@ import services.DatabaseService;
  *
  * @author Yanik
  */
-public class CategoryView extends javax.swing.JDialog {
+public class LocationView extends javax.swing.JDialog {
     DatabaseService _dbService = null;
-    List<Category> categories = new ArrayList<>();
-    Category category = null;
+    List<Location> locations = new ArrayList<>();
+    Location location = null;
     /**
-     * Creates new form CategoryView
+     * Creates new form LocationView
      */
-    public CategoryView(java.awt.Frame parent, boolean modal) {
+    public LocationView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         init();
@@ -34,60 +34,62 @@ public class CategoryView extends javax.swing.JDialog {
         this._dbService = new DatabaseService();
         DefaultTableModel model = (DefaultTableModel) this.tableCategories.getModel();
         model.setRowCount(0);
-        this.categories = this._dbService.findAll(Category.class);
-        for(Category category : categories){ 
+        this.locations = this._dbService.findAll(Location.class);
+        for(Location location : locations){ 
             model.addRow(new Object[]{
-                                       category.getCategoryId(), 
-                                       category.getName()
+                                       location.getLocationId(), 
+                                       location.getName()
                                      });
         }
     }
+    
     //TODO: Implement search
-    public void addCategory(){
-        String value = JOptionPane.showInputDialog(this, "Category Name: ");
+    
+    public void addLocation(){
+        String value = JOptionPane.showInputDialog(this, "Location Name: ");
         if(value == null || value.trim().equals("")){
-            MessageBox.errorBox(this, " - Invalid Entry", "Category name is required");
+            MessageBox.errorBox(this, " - Invalid Entry", "Location name is required");
             return;
         }
-        this.category = new Category();
-        this.category.setName(value);
+        this.location = new Location();
+        this.location.setName(value);
         boolean result = false;
-        result = this._dbService.create(this.category);
+        result = this._dbService.create(this.location);
         if(result){
-            MessageBox.infoBox(this, "- Result", "Category "+this.category.getName()+" created successfully");
+            MessageBox.infoBox(this, "- Result", "Location "+this.location.getName()+" was created successfully");
             this.init();
         }else{
-            MessageBox.errorBox(this, "- Server Error", "Category "+this.category.getName()+" was unable to be created. Please contact admin.");
+            MessageBox.errorBox(this, "- Server Error", "Location "+this.location.getName()+" was unable to be created. Please contact admin.");
             //TODO : log error
         }
     }
     
-    public void updateCategory(Category category){
-        String value = JOptionPane.showInputDialog(this, "Category Name: ",category.getName());
+    public void updateLocation(Location location){
+        String value = JOptionPane.showInputDialog(this, "Location Name: ",location.getName());
         if(value == null || value.trim().equals("")){
-            MessageBox.errorBox(this, " - Invalid Entry", "Category name is required");
+            MessageBox.errorBox(this, " - Invalid Entry", "Location name is required");
             return;
         }
-        this.category.setName(value);
+        this.location.setName(value);
         boolean result = false;
-        result = this._dbService.update(this.category);
+        result = this._dbService.update(this.location);
         if(result){
-            MessageBox.infoBox(this, "- Result", "Category "+this.category.getName()+" updated successfully");
+            MessageBox.infoBox(this, "- Result", "Location "+this.location.getName()+" was updated successfully");
             this.init();
         }else{
-            MessageBox.errorBox(this, "- Server Error", "Category "+this.category.getName()+" was unable to be created. Please contact admin.");
+            MessageBox.errorBox(this, "- Server Error", "Location "+this.location.getName()+" was unable to be created. Please contact admin.");
             //TODO : log error
         }
     }
     
-    public void deleteCategory(Category category){
+    public void deleteLocation(Location location){
         boolean result = false;
-        result = this._dbService.delete(this.category);
+        result = this._dbService.delete(this.location);
         if(result){
-            MessageBox.infoBox(this, "- Result", "Category "+this.category.getName()+" has been removed successfully");
+            MessageBox.infoBox(this, "- Result", "Location "+this.location.getName()+" has been removed successfully");
             this.init();
         }else{
-            MessageBox.errorBox(this, "- Server Error", "Category "+this.category.getName()+" was unable to be removed. Please contact admin.");
+            MessageBox.errorBox(this, "- Server Error", "Location "+this.location.getName()+" was unable to be removed. Please contact admin.");
             //TODO : log error
         }
     }
@@ -124,12 +126,20 @@ public class CategoryView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Id", "Category"
+                "Id", "Location"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tableCategories);
         if (tableCategories.getColumnModel().getColumnCount() > 0) {
-            tableCategories.getColumnModel().getColumn(0).setPreferredWidth(8);
+            tableCategories.getColumnModel().getColumn(0).setPreferredWidth(4);
         }
 
         buttonNew.setText("New");
@@ -175,7 +185,7 @@ public class CategoryView extends javax.swing.JDialog {
                         .addComponent(buttonNew)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonEdit)
-                        .addGap(1, 1, 1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonDelete))
                     .addComponent(jTextField1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -190,12 +200,17 @@ public class CategoryView extends javax.swing.JDialog {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDelete)
-                    .addComponent(buttonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(buttonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonEdit)
+                            .addComponent(buttonDelete))
+                        .addGap(8, 8, 8)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,25 +249,24 @@ public class CategoryView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
-        this.addCategory();
+        this.addLocation();
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         int row = this.tableCategories.getSelectedRow();
         System.out.println(row);
-        Category categoryToEdit = this.categories.get(row);
-        if(categoryToEdit != null){
-            this.updateCategory(categoryToEdit);
+        Location locationToEdit = this.locations.get(row);
+        if(locationToEdit != null){
+            this.updateLocation(locationToEdit);
         }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         int row = this.tableCategories.getSelectedRow();
         //TODO: fix delete
-        Category categoryToDelete = this.categories.get(row);
-        System.out.println("holll"+categoryToDelete.getName());
-        if(categoryToDelete != null){
-            this.deleteCategory(categoryToDelete);
+        Location locationToDelete = this.locations.get(row);
+        if(locationToDelete != null){
+            this.deleteLocation(locationToDelete);
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 

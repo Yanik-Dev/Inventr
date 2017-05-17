@@ -125,7 +125,7 @@ public class  DatabaseService{
         boolean result = false;
         try{
             Database.getEMInstance().getTransaction().begin();
-            Database.getEMInstance().remove(obj);
+            Database.getEMInstance().remove(Database.getEMInstance().merge(obj));
             Database.getEMInstance().getTransaction().commit();
             result = true;
         }catch(Exception ex){

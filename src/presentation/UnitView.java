@@ -6,7 +6,7 @@
 package presentation;
 
 import common.MessageBox;
-import entity.Category;
+import entity.Unit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,14 +17,14 @@ import services.DatabaseService;
  *
  * @author Yanik
  */
-public class CategoryView extends javax.swing.JDialog {
+public class UnitView extends javax.swing.JDialog {
     DatabaseService _dbService = null;
-    List<Category> categories = new ArrayList<>();
-    Category category = null;
+    List<Unit> units = new ArrayList<>();
+    Unit unit = null;
     /**
-     * Creates new form CategoryView
+     * Creates new form UnitView
      */
-    public CategoryView(java.awt.Frame parent, boolean modal) {
+    public UnitView(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         init();
@@ -34,60 +34,60 @@ public class CategoryView extends javax.swing.JDialog {
         this._dbService = new DatabaseService();
         DefaultTableModel model = (DefaultTableModel) this.tableCategories.getModel();
         model.setRowCount(0);
-        this.categories = this._dbService.findAll(Category.class);
-        for(Category category : categories){ 
+        this.units = this._dbService.findAll(Unit.class);
+        for(Unit unit : units){ 
             model.addRow(new Object[]{
-                                       category.getCategoryId(), 
-                                       category.getName()
+                                       unit.getId(), 
+                                       unit.getName()
                                      });
         }
     }
     //TODO: Implement search
-    public void addCategory(){
-        String value = JOptionPane.showInputDialog(this, "Category Name: ");
+    public void addUnit(){
+        String value = JOptionPane.showInputDialog(this, "Unit Name: ");
         if(value == null || value.trim().equals("")){
-            MessageBox.errorBox(this, " - Invalid Entry", "Category name is required");
+            MessageBox.errorBox(this, " - Invalid Entry", "Unit name is required");
             return;
         }
-        this.category = new Category();
-        this.category.setName(value);
+        this.unit = new Unit();
+        this.unit.setName(value);
         boolean result = false;
-        result = this._dbService.create(this.category);
+        result = this._dbService.create(this.unit);
         if(result){
-            MessageBox.infoBox(this, "- Result", "Category "+this.category.getName()+" created successfully");
+            MessageBox.infoBox(this, "- Result", "Unit "+this.unit.getName()+" was created successfully");
             this.init();
         }else{
-            MessageBox.errorBox(this, "- Server Error", "Category "+this.category.getName()+" was unable to be created. Please contact admin.");
+            MessageBox.errorBox(this, "- Server Error", "Unit "+this.unit.getName()+" was unable to be created. Please contact admin.");
             //TODO : log error
         }
     }
     
-    public void updateCategory(Category category){
-        String value = JOptionPane.showInputDialog(this, "Category Name: ",category.getName());
+    public void updateUnit(Unit unit){
+        String value = JOptionPane.showInputDialog(this, "Unit Name: ",unit.getName());
         if(value == null || value.trim().equals("")){
-            MessageBox.errorBox(this, " - Invalid Entry", "Category name is required");
+            MessageBox.errorBox(this, " - Invalid Entry", "Unit name is required");
             return;
         }
-        this.category.setName(value);
+        this.unit.setName(value);
         boolean result = false;
-        result = this._dbService.update(this.category);
+        result = this._dbService.update(this.unit);
         if(result){
-            MessageBox.infoBox(this, "- Result", "Category "+this.category.getName()+" updated successfully");
+            MessageBox.infoBox(this, "- Result", "Unit "+this.unit.getName()+" was updated successfully");
             this.init();
         }else{
-            MessageBox.errorBox(this, "- Server Error", "Category "+this.category.getName()+" was unable to be created. Please contact admin.");
+            MessageBox.errorBox(this, "- Server Error", "Unit "+this.unit.getName()+" was unable to be created. Please contact admin.");
             //TODO : log error
         }
     }
     
-    public void deleteCategory(Category category){
+    public void deleteUnit(Unit unit){
         boolean result = false;
-        result = this._dbService.delete(this.category);
+        result = this._dbService.delete(this.unit);
         if(result){
-            MessageBox.infoBox(this, "- Result", "Category "+this.category.getName()+" has been removed successfully");
+            MessageBox.infoBox(this, "- Result", "Unit "+this.unit.getName()+" has been removed successfully");
             this.init();
         }else{
-            MessageBox.errorBox(this, "- Server Error", "Category "+this.category.getName()+" was unable to be removed. Please contact admin.");
+            MessageBox.errorBox(this, "- Server Error", "Unit "+this.unit.getName()+" was unable to be removed. Please contact admin.");
             //TODO : log error
         }
     }
@@ -124,12 +124,20 @@ public class CategoryView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Id", "Category"
+                "Id", "Unit"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tableCategories);
         if (tableCategories.getColumnModel().getColumnCount() > 0) {
-            tableCategories.getColumnModel().getColumn(0).setPreferredWidth(8);
+            tableCategories.getColumnModel().getColumn(0).setPreferredWidth(4);
         }
 
         buttonNew.setText("New");
@@ -175,7 +183,7 @@ public class CategoryView extends javax.swing.JDialog {
                         .addComponent(buttonNew)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonEdit)
-                        .addGap(1, 1, 1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonDelete))
                     .addComponent(jTextField1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -194,8 +202,8 @@ public class CategoryView extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonDelete)
                     .addComponent(buttonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(buttonEdit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,25 +242,24 @@ public class CategoryView extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
-        this.addCategory();
+        this.addUnit();
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         int row = this.tableCategories.getSelectedRow();
         System.out.println(row);
-        Category categoryToEdit = this.categories.get(row);
-        if(categoryToEdit != null){
-            this.updateCategory(categoryToEdit);
+        Unit unitToEdit = this.units.get(row);
+        if(unitToEdit != null){
+            this.updateUnit(unitToEdit);
         }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         int row = this.tableCategories.getSelectedRow();
         //TODO: fix delete
-        Category categoryToDelete = this.categories.get(row);
-        System.out.println("holll"+categoryToDelete.getName());
-        if(categoryToDelete != null){
-            this.deleteCategory(categoryToDelete);
+        Unit unitToDelete = this.units.get(row);
+        if(unitToDelete != null){
+            this.deleteUnit(unitToDelete);
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 

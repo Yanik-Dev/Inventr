@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -26,10 +27,10 @@ public class Receivable implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @OneToMany(mappedBy="receivable",targetEntity=Item.class,fetch=FetchType.LAZY)
-    private List<Item> item;
-    @OneToMany(cascade=CascadeType.ALL,targetEntity = Supplier.class)
-    private List<Supplier> supplier;
+    @ManyToOne(cascade=CascadeType.ALL, targetEntity=Item.class,fetch=FetchType.LAZY)
+    private Item item;
+    @ManyToOne(cascade=CascadeType.ALL,targetEntity = Supplier.class)
+    private Supplier supplier;
     private double amount;
     private String dateReceived;
     private double cost;
@@ -45,28 +46,28 @@ public class Receivable implements Serializable {
     /**
      * @return the item
      */
-    public List<Item> getItem() {
+    public Item getItem() {
         return item;
     }
 
     /**
      * @param item the item to set
      */
-    public void setItem(List<Item> item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 
     /**
      * @return the supplier
      */
-    public List<Supplier> getSupplier() {
+    public Supplier getSupplier() {
         return supplier;
     }
 
     /**
      * @param supplier the supplier to set
      */
-    public void setSupplier(List<Supplier> supplier) {
+    public void setSupplier(Supplier supplier) {
         this.supplier = supplier;
     }
 
