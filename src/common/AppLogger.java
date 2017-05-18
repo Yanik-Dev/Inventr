@@ -30,12 +30,12 @@ public class AppLogger {
         logger = Logger.getLogger(className);
         try{
             //instantiate handlers
-            fileHandler = new FileHandler("./logFile.log");
+            fileHandler = new FileHandler("./log/log.log", true);
             consoleHandler = new ConsoleHandler();
 
             //add handlers to logger
             logger.addHandler(fileHandler);
-            logger.addHandler(fileHandler);
+            logger.addHandler(consoleHandler);
 
         }catch(IOException | SecurityException e){
             Logger.getLogger(AppLogger.class.getName()).log(Level.SEVERE, "Exception occur", e);

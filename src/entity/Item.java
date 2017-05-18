@@ -8,13 +8,18 @@ package entity;
 
 import constant.Status;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -45,6 +50,11 @@ public class Item implements Serializable {
     private Location location;
     @ManyToOne(targetEntity=Receivable.class)
     private Receivable receivable; 
+    
+    @Basic(optional = false)
+    @Column(insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date insertedDate;
     /**
      * @return the itemCode
      */
@@ -218,5 +228,19 @@ public class Item implements Serializable {
      */
     public void setReceivables(Receivable receivable) {
         this.receivable = receivable;
+    }
+
+    /**
+     * @return the insertedDate
+     */
+    public Date getInsertedDate() {
+        return insertedDate;
+    }
+
+    /**
+     * @param insertedDate the insertedDate to set
+     */
+    public void setInsertedDate(Date insertedDate) {
+        this.insertedDate = insertedDate;
     }
 }

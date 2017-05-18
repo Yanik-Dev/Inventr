@@ -152,14 +152,14 @@ public class Request implements Serializable {
     /**
      * @return the item
      */
-    public Item getItems() {
+    public Item getItem() {
         return item;
     }
 
     /**
      * @param item the item to set
      */
-    public void setItems(Item item) {
+    public void setItem(Item item) {
         this.item = item;
     }
 

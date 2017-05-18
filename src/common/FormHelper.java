@@ -25,7 +25,9 @@ public class FormHelper {
             } 
             else if(c instanceof JComboBox){
                 JComboBox b = (JComboBox)c;
-                b.setSelectedIndex(0);
+                if(b.getItemCount() > 0){
+                   b.setSelectedIndex(0);
+                }
             }
             else if(c instanceof JTextArea){
                 JTextArea t = (JTextArea)c;

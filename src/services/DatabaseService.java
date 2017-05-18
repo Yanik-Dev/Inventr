@@ -6,8 +6,10 @@
 
 package services;
 
+import common.AppLogger;
 import common.Database;
 import java.util.List;
+import java.util.logging.Level;
 import javax.persistence.Query;
 
 /**
@@ -29,7 +31,7 @@ public class  DatabaseService{
             Database.getEMInstance().getTransaction().commit();
             isSaved = true;
         }catch(Exception ex){
-            ex.printStackTrace();      
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);  
         }finally{
             Database.closeEM();
         }
@@ -50,7 +52,7 @@ public class  DatabaseService{
             query.setParameter(1, status);
             list = (List<E>)query.getResultList();
         }catch(Exception ex){
-            
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{
             Database.closeEM();
         }
@@ -70,13 +72,15 @@ public class  DatabaseService{
             Query query = Database.getEMInstance().createQuery("Select obj from "+type.getSimpleName()+" obj");
             list = (List<E>)query.getResultList();
         }catch(Exception ex){
-            ex.printStackTrace();
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{
             Database.closeEM();
         }
         
         return list;
     }
+    
+    
     
     /**
      * Finds an Entity record by its primary key
@@ -89,7 +93,7 @@ public class  DatabaseService{
         try{
             obj = Database.getEMInstance().find(type, id);
         }catch(Exception ex){
-            
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{
             Database.closeEM();
         }
@@ -109,7 +113,7 @@ public class  DatabaseService{
             Database.getEMInstance().getTransaction().commit();
             isUpdated = true;
         }catch(Exception ex){
-            
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{
             Database.closeEM();
         }
@@ -129,7 +133,7 @@ public class  DatabaseService{
             Database.getEMInstance().getTransaction().commit();
             result = true;
         }catch(Exception ex){
-            ex.printStackTrace();      
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{
             Database.closeEM();
         }

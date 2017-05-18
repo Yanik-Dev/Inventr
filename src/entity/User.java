@@ -7,6 +7,7 @@
 package entity;
 
 
+import constant.Status;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 /**
  *
  * @author Vice Principal
@@ -26,12 +28,13 @@ public class User extends Person implements Serializable{
     @Column(name="USERNAME")
     private String username;
     @OneToOne(cascade=CascadeType.ALL,targetEntity = Email.class)
-    private Email email;
     private String password;
     private String salt;
-    private int status;
+    private Status status;
     @ManyToMany(targetEntity=Rule.class)
-    private List<Rule> roles;
+    private List<Rule> rules;
+    @Transient 
+    private boolean isConnected;
     /**
      * @return the username
      */
@@ -46,19 +49,6 @@ public class User extends Person implements Serializable{
         this.username = username;
     }
 
-    /**
-     * @return the email
-     */
-    public Email getEmail() {
-        return email;
-    }
-
-    /**
-     * @param email the email to set
-     */
-    public void setEmail(Email email) {
-        this.email = email;
-    }
 
     /**
      * @return the password
@@ -91,29 +81,43 @@ public class User extends Person implements Serializable{
     /**
      * @return the status
      */
-    public int getStatus() {
+    public Status getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(int status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
     /**
-     * @return the roles
+     * @return the rules
      */
-    public List<Rule> getRoles() {
-        return roles;
+    public List<Rule> getRules() {
+        return rules;
     }
 
     /**
-     * @param roles the roles to set
+     * @param rules the roles to set
      */
-    public void setRoles(List<Rule> roles) {
-        this.roles = roles;
+    public void setRules(List<Rule> rules) {
+        this.rules = rules;
+    }
+
+    /**
+     * @return the isConnected
+     */
+    public boolean isIsConnected() {
+        return isConnected;
+    }
+
+    /**
+     * @param isConnected the isConnected to set
+     */
+    public void setIsConnected(boolean isConnected) {
+        this.isConnected = isConnected;
     }
     
 }

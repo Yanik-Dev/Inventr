@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import services.DatabaseService;
+import services.SupplierService;
 
 /**
  *
@@ -33,7 +33,7 @@ public class SupplierFormDialog extends javax.swing.JDialog {
     private List<PhoneNumber> numberList = new ArrayList<>();
     private List<Email> emailList = new ArrayList<>();
     private List<Country> countries = new ArrayList<>();
-    DatabaseService _dbService = null;
+    SupplierService _dbService = null;
     /**
      * Creates new form NewJDialog
      */
@@ -108,7 +108,7 @@ public class SupplierFormDialog extends javax.swing.JDialog {
     
     public void getCountries(){
         this.comboBoxCountry.removeAllItems();
-        this._dbService = new DatabaseService();
+        this._dbService = new SupplierService();
         this.countries = this._dbService.findAll(Country.class);
         if(this.countries != null){
             for(Country country : this.countries){
@@ -388,7 +388,6 @@ public class SupplierFormDialog extends javax.swing.JDialog {
         labelItemCode2.setText("Phone Number(s)");
 
         labelItemCode1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelItemCode1.setForeground(new java.awt.Color(204, 204, 204));
         labelItemCode1.setText("Email(s)");
 
         labelItemCode3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -573,29 +572,37 @@ public class SupplierFormDialog extends javax.swing.JDialog {
         if(!this.validateForm()){
             return;
         }
-        if(this.emailList.size() < 1 || this.numberList.size() < 1){
-           String message = " Are you want to insert supplier without "+((this.emailList.size() < 1)?" email " :"")+((this.numberList.size() < 1)?" Phone Number " :"");
-           if(JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(this, message, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)){
-               return;
-           };
-        }
+        
         this.setSupplier();
         boolean result = false;
         if(this.supplier.getId() > 0){
             result = this._dbService.update(this.supplier);
             if(result){
                 MessageBox.infoBox(this, "- Result", "Supplier "+this.supplier.getName()+" update successfully");
+                this.setVisible(false);
+                this.dispose();
             }else{
                 MessageBox.errorBox(this, "- Server Error", "Supplier "+this.supplier.getName()+" was unable to be updated. Please contact admin.");
-                //TODO : log error
             }
         }else{
+            
+            result = this._dbService.exist(this.supplier);
+            if(result){
+                MessageBox.infoBox(this, "- Result", "Supplier "+this.supplier.getName()+" already exist.");
+                return;
+            }
+            
+            if(this.emailList.size() < 1 || this.numberList.size() < 1){
+                String message = " Are you want to insert supplier without "+((this.emailList.size() < 1)?" Email " :"")+((this.numberList.size() < 1)?" and Phone number " :"");
+                if(JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(this, message, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)){
+                    return;
+                };
+            }
             result = this._dbService.create(this.supplier);
             if(result){
                 MessageBox.infoBox(this, "- Result", "Supplier "+this.supplier.getName()+" create successfully");
             }else{
                 MessageBox.errorBox(this, "- Server Error", "Supplier "+this.supplier.getName()+" was unable to be created. Please contact admin.");
-                //TODO : log error
             }
         }
         if(result){ this.clearForm(); }

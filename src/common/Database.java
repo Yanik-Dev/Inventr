@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -36,7 +35,7 @@ public class Database {
             Class.forName("com.mysql.jdbc.Driver");
             _connection = (Connection) DriverManager.getConnection("", "", "");
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+             AppLogger.getLogger(Database.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }
         return _connection;
     }
@@ -50,7 +49,7 @@ public class Database {
             try {
                 _connection.close();
             } catch (SQLException ex) {
-                Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+                 AppLogger.getLogger(Database.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
             }
         }
     }
