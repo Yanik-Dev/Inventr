@@ -156,9 +156,10 @@ public class UnitService {
         List<Unit> units = new ArrayList<>();
         String sql = "SELECT * FROM units";
         try{
+            this._statement = Database.getTInstance().createStatement();
             ResultSet resultSet = this._statement.executeQuery(sql);
             while(resultSet.next()){
-                Unit unit = new Unit(resultSet.getInt(0), resultSet.getString(1));
+                Unit unit = new Unit(resultSet.getInt(1), resultSet.getString(2));
                 units.add(unit);
             }
         }catch(SQLException ex){
@@ -189,7 +190,7 @@ public class UnitService {
             this._preparedStatement.setInt(1, unitRef.getId()); 
             ResultSet resultSet = this._preparedStatement.executeQuery(sql);
             while(resultSet.next()){
-                unit = new Unit(resultSet.getInt(0), resultSet.getString(1));
+                unit = new Unit(resultSet.getInt(1), resultSet.getString(2));
             }
         }catch(SQLException ex){
             AppLogger.getLogger(UnitService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
@@ -219,7 +220,7 @@ public class UnitService {
             this._preparedStatement.setString(1, "%"+q+"%"); 
             ResultSet resultSet = this._preparedStatement.executeQuery(sql);
             while(resultSet.next()){
-                Unit unit = new Unit(resultSet.getInt(0), resultSet.getString(1));
+                Unit unit = new Unit(resultSet.getInt(1), resultSet.getString(2));
                 units.add(unit);
             }
         }catch(SQLException ex){

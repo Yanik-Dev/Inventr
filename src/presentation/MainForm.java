@@ -9,12 +9,17 @@ import common.AppLogger;
 import common.SocketConfiguration;
 import org.springframework.context.ApplicationContext; 
 import entity.User;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ContainerAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.net.Socket;
 import java.util.logging.Level;
 import javax.swing.JFrame;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 import org.springframework.beans.BeansException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -29,6 +34,11 @@ public class MainForm extends javax.swing.JFrame {
     SupplierInternalFrame supplierView = null;
     DashboardInternalFrame dashboard = null;
     TransactionInternalFrame transFrame = null;
+    UserInternalFrame userView =null;
+    CategoryViewDialog categoryView = null;
+    UnitViewDialog unitView =null;
+    LocationViewDialog locationView = null;
+    
     User _user = null;
     /**
      * Creates new form main
@@ -66,13 +76,15 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPaneMain = new javax.swing.JDesktopPane();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        menuBar = new javax.swing.JMenuBar();
         transMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         inventoryMenu = new javax.swing.JMenu();
-        categoryMenuItem = new javax.swing.JMenuItem();
         itemMenuItem = new javax.swing.JMenuItem();
         supplierMenuItem = new javax.swing.JMenuItem();
+        categoryMenuItem = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         systemMenu = new javax.swing.JMenu();
         userMenuItem = new javax.swing.JMenuItem();
 
@@ -89,7 +101,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGap(0, 516, Short.MAX_VALUE)
         );
 
-        jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
+        menuBar.setBackground(new java.awt.Color(51, 51, 51));
 
         transMenu.setMnemonic('T');
         transMenu.setText("Transactions");
@@ -100,6 +112,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem1.setText("Logs");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,10 +121,29 @@ public class MainForm extends javax.swing.JFrame {
         });
         transMenu.add(jMenuItem1);
 
-        jMenuBar1.add(transMenu);
+        menuBar.add(transMenu);
 
         inventoryMenu.setText("Inventory Management");
 
+        itemMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        itemMenuItem.setText("Item Management");
+        itemMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemMenuItemActionPerformed(evt);
+            }
+        });
+        inventoryMenu.add(itemMenuItem);
+
+        supplierMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        supplierMenuItem.setText("Supplier Managment");
+        supplierMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                supplierMenuItemActionPerformed(evt);
+            }
+        });
+        inventoryMenu.add(supplierMenuItem);
+
+        categoryMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         categoryMenuItem.setMnemonic('C');
         categoryMenuItem.setText("Category Management");
         categoryMenuItem.setToolTipText("Manage categorues");
@@ -122,34 +154,42 @@ public class MainForm extends javax.swing.JFrame {
         });
         inventoryMenu.add(categoryMenuItem);
 
-        itemMenuItem.setText("Item Management");
-        itemMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Unit Management");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemMenuItemActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        inventoryMenu.add(itemMenuItem);
+        inventoryMenu.add(jMenuItem2);
 
-        supplierMenuItem.setText("Supplier Managment");
-        supplierMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3.setText("Storage Management");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                supplierMenuItemActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        inventoryMenu.add(supplierMenuItem);
+        inventoryMenu.add(jMenuItem3);
 
-        jMenuBar1.add(inventoryMenu);
+        menuBar.add(inventoryMenu);
 
         systemMenu.setText("System Management");
 
+        userMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
         userMenuItem.setMnemonic('U');
         userMenuItem.setText("User Management");
         userMenuItem.setToolTipText("Create, update and delete Users");
+        userMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userMenuItemActionPerformed(evt);
+            }
+        });
         systemMenu.add(userMenuItem);
 
-        jMenuBar1.add(systemMenu);
+        menuBar.add(systemMenu);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,31 +207,50 @@ public class MainForm extends javax.swing.JFrame {
 
     private void itemMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuItemActionPerformed
         this.itemView = new ItemInternalFrame();
+        disableMenu(true);
+        this.itemView.addInternalFrameListener(new InternalFrameAdapter(){
+             public void internalFrameClosed(InternalFrameEvent e) {
+               disableMenu(false);
+             }
+         });
         this.desktopPaneMain.add(this.itemView);
+        
         try {
             itemView.setMaximum(true);
           } catch (PropertyVetoException e) {
-            // Vetoed by internalFrame
-            // ... possibly add some handling for this case
           }
         this.itemView.setBorder(null);
         this.itemView.setVisible(true);
     }//GEN-LAST:event_itemMenuItemActionPerformed
 
     private void categoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryMenuItemActionPerformed
-        CategoryViewDialog categoryView = new CategoryViewDialog(this, true);
+        categoryView = new CategoryViewDialog(this, true);
+        disableMenu(true);
+        this.categoryView.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                disableMenu(false);
+                categoryView = null;
+              }
+        });
         categoryView.setLocationRelativeTo(null);
         categoryView.setVisible(true);
     }//GEN-LAST:event_categoryMenuItemActionPerformed
 
     private void supplierMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supplierMenuItemActionPerformed
         this.supplierView = new SupplierInternalFrame();
+        disableMenu(true);
+         this.supplierView.addInternalFrameListener(new InternalFrameAdapter(){
+             public void internalFrameClosed(InternalFrameEvent e) {
+               disableMenu(false);
+             }
+         });
         this.desktopPaneMain.add(this.supplierView);
+        
         try {
             supplierView.setMaximum(true);
           } catch (PropertyVetoException e) {
-            // Vetoed by internalFrame
-            // ... possibly add some handling for this case
           }
         this.supplierView.setBorder(null);
         this.supplierView.setVisible(true);
@@ -204,7 +263,12 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
          this.transFrame = new TransactionInternalFrame();
-         
+         disableMenu(true);
+         this.transFrame.addInternalFrameListener(new InternalFrameAdapter(){
+             public void internalFrameClosed(InternalFrameEvent e) {
+               disableMenu(false);
+             }
+         });
         this.desktopPaneMain.add(this.transFrame);
         try {
             transFrame.setMaximum(true);
@@ -216,6 +280,61 @@ public class MainForm extends javax.swing.JFrame {
         this.transFrame.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void userMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userMenuItemActionPerformed
+        this.userView = new UserInternalFrame();
+        disableMenu(true);
+        this.userView.addInternalFrameListener(new InternalFrameAdapter(){
+             public void internalFrameClosed(InternalFrameEvent e) {
+               disableMenu(false);
+             }
+         });
+        this.desktopPaneMain.add(this.userView);
+        
+        try {
+            userView.setMaximum(true);
+          } catch (PropertyVetoException e) {
+          }
+        this.userView.setBorder(null);
+        this.userView.setVisible(true);
+    }//GEN-LAST:event_userMenuItemActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.unitView = new UnitViewDialog(this, true);
+        disableMenu(true);
+        this.unitView.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                disableMenu(false);
+                unitView = null;
+              }
+        });
+        
+        unitView.setLocationRelativeTo(null);
+        unitView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       this.locationView = new LocationViewDialog(this, true);
+        disableMenu(true);
+        this.locationView.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                disableMenu(false);
+                locationView = null;
+              }
+        });
+        
+        locationView.setLocationRelativeTo(null);
+        locationView.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    
+    public void disableMenu(boolean value){
+        this.inventoryMenu.setEnabled(!value);
+        this.transMenu.setEnabled(!value);
+        this.systemMenu.setEnabled(!value);
+    }
     /**
      * @param args the command line arguments
      */
@@ -261,8 +380,10 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPaneMain;
     private javax.swing.JMenu inventoryMenu;
     private javax.swing.JMenuItem itemMenuItem;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem supplierMenuItem;
     private javax.swing.JMenu systemMenu;
     private javax.swing.JMenu transMenu;

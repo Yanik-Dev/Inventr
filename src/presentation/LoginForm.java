@@ -7,6 +7,8 @@
 package presentation;
 
 import entity.User;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import security.Security;
 import services.DatabaseService;
 
@@ -15,7 +17,7 @@ import services.DatabaseService;
  * @author Yanik
  */
 public class LoginForm extends javax.swing.JFrame {
-    
+     MainForm mainForm = null;
     DatabaseService _dbService = null;
     /** Creates new form LoginView */
     public LoginForm() {
@@ -168,14 +170,24 @@ public class LoginForm extends javax.swing.JFrame {
         if(user == null){
             this.lblError.setText("*Incorrect Username or Password.");
             this.lblError.setVisible(true);
+            return;
         }
         String hash = Security.get_SHA_512_SecurePassword(this.usernameTxtbx.getText().trim(), user.getSalt());
         if(!user.getPassword().equals(hash)){
             this.lblError.setText("*Incorrect Username or Password.");
             this.lblError.setVisible(true);
+            return;
         }
         
-        MainForm mainForm = new MainForm(user);
+        mainForm = new MainForm(user);
+        this.mainForm.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                setVisible(true);
+                mainForm = null;
+              }
+            });
         this.setVisible(false);
         mainForm.setVisible(true);
     }//GEN-LAST:event_signInBtnActionPerformed
