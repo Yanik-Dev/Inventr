@@ -6,10 +6,8 @@
 package presentation;
 
 import entity.Country;
-import entity.Email;
-import entity.PhoneNumber;
+import entity.Item;
 import entity.Rule;
-import entity.Supplier;
 import entity.User;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -17,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import services.DatabaseService;
+import services.ItemService;
+import services.UserService;
 
 /**
  *
@@ -24,7 +24,7 @@ import services.DatabaseService;
  */
 public class UserInternalFrame extends javax.swing.JInternalFrame {
     private UserFormDialog _userForm = null;
-    private DatabaseService _dbService = null;
+    private UserService _dbService = null;
     private List<User> _users = new ArrayList<>();
     private javax.swing.DefaultListModel ruleListModel; 
     private List<Rule> ruleList = new ArrayList<>();
@@ -41,7 +41,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
    
     public void init(){
         ((DefaultTableModel) this.tableUsers.getModel()).setNumRows(0);
-        this._dbService = new DatabaseService();
+        this._dbService = new UserService();
         DefaultTableModel model = (DefaultTableModel) this.tableUsers.getModel();
         model.setRowCount(0);
         this._users = this._dbService.findAll(User.class);
@@ -58,8 +58,19 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
         if(value){ }
         else { }
     }
-    public void search(String value){
-        //TODO: Implement search
+    public void search(String search){
+        this._dbService = new UserService();
+        ((DefaultTableModel) this.tableUsers.getModel()).setRowCount(0);
+        DefaultTableModel model = (DefaultTableModel) this.tableUsers.getModel();
+        model.setRowCount(0);
+        this._users = this._dbService.search(search);
+        for(User user : this._users){ 
+            model.addRow(new Object[]{
+                                       user.getId(), 
+                                       user.getFirstname()+" "+user.getLastname(), 
+                                       user.getUsername()
+                                     });
+        }
     }
     
     
@@ -94,6 +105,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textRules = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -188,7 +200,14 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
 
         txtboxSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtboxSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtboxSearch.setText("Search");
+        txtboxSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtboxSearchKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtboxSearchKeyTyped(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(106, 106, 106));
 
@@ -262,6 +281,10 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI Light", 0, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(106, 106, 106));
+        jLabel3.setText("Search");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -280,14 +303,19 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
                                 .addComponent(buttonEdit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonDelete)))
-                        .addGap(358, 358, 358)))
+                        .addGap(358, 358, 358))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtboxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -458,6 +486,14 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
          
     }//GEN-LAST:event_tableUsersFocusLost
 
+    private void txtboxSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtboxSearchKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtboxSearchKeyTyped
+
+    private void txtboxSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtboxSearchKeyPressed
+        this.search(this.txtboxSearch.getText().trim());
+    }//GEN-LAST:event_txtboxSearchKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddSupplier;
@@ -467,6 +503,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -112,6 +112,7 @@ public class ItemInternalFrame extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaSuppliers = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -207,7 +208,11 @@ public class ItemInternalFrame extends javax.swing.JInternalFrame {
 
         txtboxSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtboxSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtboxSearch.setText("Search");
+        txtboxSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtboxSearchKeyPressed(evt);
+            }
+        });
 
         jPanel7.setBackground(new java.awt.Color(106, 106, 106));
 
@@ -281,6 +286,10 @@ public class ItemInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI Light", 0, 20)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(106, 106, 106));
+        jLabel5.setText("Search");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -299,14 +308,19 @@ public class ItemInternalFrame extends javax.swing.JInternalFrame {
                                 .addComponent(buttonEdit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(buttonDelete)))
-                        .addGap(358, 358, 358)))
+                        .addGap(358, 358, 358))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtboxSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -483,6 +497,10 @@ public class ItemInternalFrame extends javax.swing.JInternalFrame {
          
     }//GEN-LAST:event_tableItemsFocusLost
 
+    private void txtboxSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtboxSearchKeyPressed
+        this.search(this.txtboxSearch.getText().trim());
+    }//GEN-LAST:event_txtboxSearchKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddItem;
@@ -494,6 +512,7 @@ public class ItemInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

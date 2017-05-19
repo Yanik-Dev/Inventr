@@ -30,7 +30,7 @@ public class AppLogger {
         logger = Logger.getLogger(className);
         try{
             //instantiate handlers
-            fileHandler = new FileHandler("./log/log.log", true);
+            fileHandler = new FileHandler("./log.log", 0, 1, true);
             consoleHandler = new ConsoleHandler();
 
             //add handlers to logger

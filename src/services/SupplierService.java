@@ -39,7 +39,7 @@ public class SupplierService extends DatabaseService {
     public  List<Supplier> search(String q){
         List<Supplier> list = null;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Supplier  obj where obj.name = :q ")
+            Query query = Database.getEMInstance().createQuery("Select obj from Supplier  obj where obj.name LIKE :q ")
                                                   .setParameter("q", "%"+q+"%");
 
              list = (List<Supplier>)query.getResultList();

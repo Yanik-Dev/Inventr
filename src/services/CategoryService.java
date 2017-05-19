@@ -38,7 +38,7 @@ public class CategoryService extends DatabaseService {
     public  List<Category> search(String q){
         List<Category> list = null;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Category  obj where obj.name = :q")
+            Query query = Database.getEMInstance().createQuery("Select obj from Category  obj where obj.name LIKE :q")
                                                   .setParameter("q", "%"+q+"%");
 
              list = (List<Category>)query.getResultList();

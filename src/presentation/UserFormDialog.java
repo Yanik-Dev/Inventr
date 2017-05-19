@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import security.Security;
-import services.DatabaseService;
+import services.UserService;
 
 /**
  *
@@ -25,7 +25,7 @@ public class UserFormDialog extends javax.swing.JDialog {
     List<Rule> _assignedRules = new ArrayList<>();
     List<Rule> _availableRules = new ArrayList<>();  
     User _user = null;
-    DatabaseService _dbService = null;
+    UserService _dbService = null;
     boolean isUpdate = false;
     DefaultListModel availableRulesList = new DefaultListModel();
     DefaultListModel assignedRulesList = new DefaultListModel();
@@ -53,7 +53,7 @@ public class UserFormDialog extends javax.swing.JDialog {
 
     public void getRules(){
         this.availableRulesList.clear();
-        this._dbService = new DatabaseService();
+        this._dbService = new UserService();
         this._availableRules = this._dbService.findAll(Rule.class);
         for(Rule category : this._availableRules){
             this.availableRulesList.addElement(category.getName());
@@ -124,9 +124,7 @@ public class UserFormDialog extends javax.swing.JDialog {
                 errorMessage += counter+". At lest one (1) rule should be assign to this user\n";
             }
         } 
-        
-        
-  
+
         if(counter > 0){
             MessageBox.errorBox(this, "- Invalid Entries", errorMessage);
             return false;
@@ -444,9 +442,15 @@ public class UserFormDialog extends javax.swing.JDialog {
                 this.dispose();
             }else{
                 MessageBox.errorBox(this, "- Server Error", "Item "+this._user.getUsername()+" was unable to be updated. Please contact admin.");
-                //TODO : log error
+                
             }
         }else{
+            
+            result = this._dbService.exist(this._user);
+            if(result){
+                MessageBox.infoBox(this, "- Result", "User "+this._user.getUsername()+" already exist.");
+                return;
+            }
             result = this._dbService.create(this._user);
             if(result){
                 MessageBox.infoBox(this, "- Result", "User "+this._user.getUsername()+" created successfully");

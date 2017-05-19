@@ -20,12 +20,15 @@ import java.util.logging.Logger;
  * @author Yanik
  */
 public class Client {
+    
+    static ClientThread clientThread;
     ObjectOutputStream clientOutputStream = null;
     ObjectInputStream clientInputStream = null;
     Socket socketConnection = null;
     List<User> userList = new ArrayList<>();
     
-    public Client(User user) {
+    public Client(Socket socket, User user) {
+        this.socketConnection = socket;
         try {
             clientOutputStream = new ObjectOutputStream(socketConnection.getOutputStream());
             clientInputStream = new ObjectInputStream(socketConnection.getInputStream());
@@ -34,8 +37,11 @@ public class Client {
             User response = (User)clientInputStream.readObject();
             
             if(response != null){
+                System.out.println(response.getUsername());
                 userList.add(response);
             }
+            Thread clientT = new Thread(clientThread);
+            clientT.start();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {

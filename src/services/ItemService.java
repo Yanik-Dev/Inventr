@@ -40,7 +40,7 @@ public class ItemService extends DatabaseService {
     public  List<Item> search(String q){
         List<Item> list = null;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Item  obj where obj.itemCode = :q or obj.itemName = :q")
+            Query query = Database.getEMInstance().createQuery("Select obj from Item  obj where obj.itemCode LIKE :q or obj.itemName LIKE :q")
                                                   .setParameter("q", "%"+q+"%");
 
              list = (List<Item>)query.getResultList();

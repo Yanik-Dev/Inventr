@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -32,11 +33,18 @@ public class Database {
      */
     public static Connection getTInstance(){
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            _connection = (Connection) DriverManager.getConnection("", "", "");
-        } catch (ClassNotFoundException | SQLException ex) {
-             AppLogger.getLogger(Database.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
+            if(_connection == null || _connection.isClosed()){
+                try {
+                    Class.forName("com.mysql.jdbc.Driver");
+                    _connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/inventr_db?zeroDateTimeBehavior=convertToNull", "root", "");
+                } catch (ClassNotFoundException | SQLException ex) {
+                    AppLogger.getLogger(Database.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
+                }
+            }
+        } catch (SQLException ex) {
+            AppLogger.getLogger(Database.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }
+        
         return _connection;
     }
     

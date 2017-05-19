@@ -34,7 +34,7 @@ public class UnitService {
         try{
             String sql = "INSERT INTO units SET name = ?";
             this._preparedStatement = Database.getTInstance().prepareStatement(sql);
-            this._preparedStatement.setString(0, unit.getName());
+            this._preparedStatement.setString(1, unit.getName());
             this._preparedStatement.execute();
             result = true;
         }catch(SQLException ex){
@@ -62,7 +62,7 @@ public class UnitService {
         try{
             String sql = "SELECT * units WHERE name = ?";
             this._preparedStatement = Database.getTInstance().prepareStatement(sql);
-            this._preparedStatement.setString(0, unit.getName());
+            this._preparedStatement.setString(1, unit.getName());
             ResultSet resultSet = this._preparedStatement.getResultSet();
             if(resultSet.first()){
                 result = true;
@@ -92,8 +92,8 @@ public class UnitService {
         try{
             String sql = "UPDATE INTO units SET name = ? WHERE unit_id = ?";
             this._preparedStatement = Database.getTInstance().prepareStatement(sql);
-            this._preparedStatement.setString(0, unit.getName());
-            this._preparedStatement.setInt(0, unit.getId()); 
+            this._preparedStatement.setString(1, unit.getName());
+            this._preparedStatement.setInt(1, unit.getId()); 
             this._preparedStatement.execute();
             result = true;
         }catch(SQLException ex){
@@ -123,12 +123,12 @@ public class UnitService {
             
             //set all items' foriegn key that uses this unit to null
             this._preparedStatement = Database.getTInstance().prepareStatement("UPDATE items SET unit_id = NULL WHERE unit_id = ?");
-            this._preparedStatement.setInt(0, unit.getId()); 
+            this._preparedStatement.setInt(1, unit.getId()); 
             this._preparedStatement.execute();
             
             //delete unit
             this._preparedStatement = Database.getTInstance().prepareStatement("DELETE FROM units WHERE unit_id = ?");
-            this._preparedStatement.setInt(0, unit.getId()); 
+            this._preparedStatement.setInt(1, unit.getId()); 
             this._preparedStatement.execute();
             Database.getTInstance().commit();
             result = true;
@@ -186,7 +186,7 @@ public class UnitService {
         try{
             String sql = "SELECT * FROM units WHERE unit_id = ?";
             this._preparedStatement = Database.getTInstance().prepareStatement(sql);
-            this._preparedStatement.setInt(0, unitRef.getId()); 
+            this._preparedStatement.setInt(1, unitRef.getId()); 
             ResultSet resultSet = this._preparedStatement.executeQuery(sql);
             while(resultSet.next()){
                 unit = new Unit(resultSet.getInt(0), resultSet.getString(1));
@@ -216,7 +216,7 @@ public class UnitService {
         String sql = "SELECT * FROM units WHERE name LIKE ?";
         try{
             this._preparedStatement = Database.getTInstance().prepareStatement(sql);
-            this._preparedStatement.setString(0, "%"+q+"%"); 
+            this._preparedStatement.setString(1, "%"+q+"%"); 
             ResultSet resultSet = this._preparedStatement.executeQuery(sql);
             while(resultSet.next()){
                 Unit unit = new Unit(resultSet.getInt(0), resultSet.getString(1));

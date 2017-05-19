@@ -10,6 +10,7 @@ import java.net.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import presentation.DashboardInternalFrame;
 /**
  *
  * @author rahiem
@@ -19,16 +20,15 @@ public class ClientThread implements Runnable {
     ObjectOutputStream clientOutputStream = null;
     ObjectInputStream clientInputStream = null;
     Socket socketConnection = null;
-    Client client;
+    DashboardInternalFrame client;
 
-    public ClientThread(Socket newSocket, Client client){
+    public ClientThread(Socket newSocket, DashboardInternalFrame client){
         socketConnection = newSocket;
         this.client = client;
     }
     
     @Override
     public void run() {
-    
         try
         {
             try
@@ -63,20 +63,24 @@ public class ClientThread implements Runnable {
         }
     }
     
-    public void Recieve()throws IOException {
-        
-   
+    public void Recieve() {
         try {
             User response = (User)clientInputStream.readObject();
             
+            if(response != null){
+                System.out.println(response.getUsername());
+                this.client.getUserList().add(response);
+            }
             if(!response.isIsConnected())
             {
                 this.client.getUserList().remove(response);
             }
             else{
-                //Client.chatArea.append(Message+"\n");
+                //this.client.textAreaOnlineUsers.append(Message+"\n");
             }
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

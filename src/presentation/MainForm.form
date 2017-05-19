@@ -2,26 +2,6 @@
 
 <Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem1">
-      <Properties>
-        <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="jRadioButtonMenuItem1"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JMenuItem" name="jMenuItem4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jMenuItem4"/>
-      </Properties>
-    </Component>
-    <Container class="javax.swing.JMenu" name="jMenu7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jMenu7"/>
-      </Properties>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-    </Container>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -29,6 +9,26 @@
         </Property>
       </Properties>
       <SubComponents>
+        <Menu class="javax.swing.JMenu" name="transMenu">
+          <Properties>
+            <Property name="mnemonic" type="int" value="84"/>
+            <Property name="text" type="java.lang.String" value="Transactions"/>
+            <Property name="toolTipText" type="java.lang.String" value="View requests and receivable logs"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="transMenuActionPerformed"/>
+          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Logs"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="inventoryMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Inventory Management"/>
@@ -36,7 +36,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="categoryMenuItem">
               <Properties>
+                <Property name="mnemonic" type="int" value="67"/>
                 <Property name="text" type="java.lang.String" value="Category Management"/>
+                <Property name="toolTipText" type="java.lang.String" value="Manage categorues"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="categoryMenuItemActionPerformed"/>
@@ -60,23 +62,6 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="transactionMenu">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Transactions"/>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="receivableMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Receivables"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="requestMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Request"/>
-              </Properties>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="systemMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="System Management"/>
@@ -84,12 +69,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="userMenuItem">
               <Properties>
+                <Property name="mnemonic" type="int" value="85"/>
                 <Property name="text" type="java.lang.String" value="User Management"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="logMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Action Logs"/>
+                <Property name="toolTipText" type="java.lang.String" value="Create, update and delete Users"/>
               </Properties>
             </MenuItem>
           </SubComponents>

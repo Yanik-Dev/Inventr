@@ -9,6 +9,8 @@ import common.AppLogger;
 import common.SocketConfiguration;
 import org.springframework.context.ApplicationContext; 
 import entity.User;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -22,16 +24,30 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class MainForm extends javax.swing.JFrame {
     //Global Class declaration of forms/views
-    SocketConfiguration socketConfig = null;
+
     ItemInternalFrame itemView = null;
     SupplierInternalFrame supplierView = null;
+    DashboardInternalFrame dashboard = null;
+    TransactionInternalFrame transFrame = null;
     User _user = null;
     /**
      * Creates new form main
      */
     public MainForm() {
         initComponents();
-        this.connect();
+        
+       /* dashboard = new DashboardInternalFrame();
+                 this.desktopPaneMain.add(dashboard);
+
+         try {
+            dashboard.setMaximum(true);
+          } catch (PropertyVetoException e) {
+            // Vetoed by internalFrame
+            // ... possibly add some handling for this case
+          }
+         
+        dashboard.setBorder(null);
+        dashboard.setVisible(true);*/
     }
     
     public MainForm(User user) {
@@ -39,26 +55,7 @@ public class MainForm extends javax.swing.JFrame {
         this._user = user;
     }
     
-    public void connect(){
-        try{
-           ApplicationContext applicationContext = new ClassPathXmlApplicationContext("ioc/SocketConfig.xml"); 
-           socketConfig = (SocketConfiguration)applicationContext.getBean("socketconfig"); 
-        }catch(BeansException e){
-             AppLogger.getLogger(MainForm.class.getName()).log(Level.WARNING, "A serious Exception has occurred", e);
-        }
-         System.out.print(socketConfig.getServer());
-        try
-        {
-            
-            Socket socket = new Socket(socketConfig.getServer(), socketConfig.getPort());
-            System.out.println("You connected to : "+socketConfig.getServer());
-            
-        }
-        catch(Exception ex)
-        {
-            
-        }
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,28 +65,16 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
         desktopPaneMain = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
+        transMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         inventoryMenu = new javax.swing.JMenu();
         categoryMenuItem = new javax.swing.JMenuItem();
         itemMenuItem = new javax.swing.JMenuItem();
         supplierMenuItem = new javax.swing.JMenuItem();
-        transactionMenu = new javax.swing.JMenu();
-        receivableMenuItem = new javax.swing.JMenuItem();
-        requestMenuItem = new javax.swing.JMenuItem();
         systemMenu = new javax.swing.JMenu();
         userMenuItem = new javax.swing.JMenuItem();
-        logMenuItem = new javax.swing.JMenuItem();
-
-        jRadioButtonMenuItem1.setSelected(true);
-        jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
-
-        jMenuItem4.setText("jMenuItem4");
-
-        jMenu7.setText("jMenu7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -106,9 +91,30 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.setBackground(new java.awt.Color(51, 51, 51));
 
+        transMenu.setMnemonic('T');
+        transMenu.setText("Transactions");
+        transMenu.setToolTipText("View requests and receivable logs");
+        transMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                transMenuActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("Logs");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        transMenu.add(jMenuItem1);
+
+        jMenuBar1.add(transMenu);
+
         inventoryMenu.setText("Inventory Management");
 
+        categoryMenuItem.setMnemonic('C');
         categoryMenuItem.setText("Category Management");
+        categoryMenuItem.setToolTipText("Manage categorues");
         categoryMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoryMenuItemActionPerformed(evt);
@@ -134,23 +140,12 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenuBar1.add(inventoryMenu);
 
-        transactionMenu.setText("Transactions");
-
-        receivableMenuItem.setText("Receivables");
-        transactionMenu.add(receivableMenuItem);
-
-        requestMenuItem.setText("Request");
-        transactionMenu.add(requestMenuItem);
-
-        jMenuBar1.add(transactionMenu);
-
         systemMenu.setText("System Management");
 
+        userMenuItem.setMnemonic('U');
         userMenuItem.setText("User Management");
+        userMenuItem.setToolTipText("Create, update and delete Users");
         systemMenu.add(userMenuItem);
-
-        logMenuItem.setText("Action Logs");
-        systemMenu.add(logMenuItem);
 
         jMenuBar1.add(systemMenu);
 
@@ -203,6 +198,24 @@ public class MainForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_supplierMenuItemActionPerformed
 
+    private void transMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transMenuActionPerformed
+      
+    }//GEN-LAST:event_transMenuActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+         this.transFrame = new TransactionInternalFrame();
+         
+        this.desktopPaneMain.add(this.transFrame);
+        try {
+            transFrame.setMaximum(true);
+          } catch (PropertyVetoException e) {
+            // Vetoed by internalFrame
+            // ... possibly add some handling for this case
+          }
+        this.transFrame.setBorder(null);
+        this.transFrame.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -248,16 +261,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPaneMain;
     private javax.swing.JMenu inventoryMenu;
     private javax.swing.JMenuItem itemMenuItem;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
-    private javax.swing.JMenuItem logMenuItem;
-    private javax.swing.JMenuItem receivableMenuItem;
-    private javax.swing.JMenuItem requestMenuItem;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem supplierMenuItem;
     private javax.swing.JMenu systemMenu;
-    private javax.swing.JMenu transactionMenu;
+    private javax.swing.JMenu transMenu;
     private javax.swing.JMenuItem userMenuItem;
     // End of variables declaration//GEN-END:variables
 }

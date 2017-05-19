@@ -38,7 +38,7 @@ public class LocationService extends DatabaseService {
     public  List<Location> search(String q){
         List<Location> list = null;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Location  obj where obj.name = :q")
+            Query query = Database.getEMInstance().createQuery("Select obj from Location  obj where obj.name LIKE :q")
                                                   .setParameter("q", "%"+q+"%");
 
              list = (List<Location>)query.getResultList();
