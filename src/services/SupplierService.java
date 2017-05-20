@@ -26,7 +26,7 @@ public class SupplierService extends DatabaseService {
                                                   .setParameter("name", supplier.getName()); 
 
             List<Supplier> i = (List<Supplier>)query.getResultList();
-            if(i != null) { result = true; }
+            if(!i.isEmpty()) { result = true; }
         }catch(Exception ex){
              AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{

@@ -7,11 +7,13 @@ package presentation;
 
 import common.FormHelper;
 import common.MessageBox;
+import common.Validator;
 import entity.Item;
 import entity.Receivable;
 import entity.Supplier;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import services.DatabaseService;
 
 /**
@@ -47,6 +49,7 @@ public class ReceivableFormDialog extends javax.swing.JDialog {
     }
     
     public void getSuppliers(){
+        ((DefaultComboBoxModel) this.comboBoxSupplier.getModel()).removeAllElements();
         this.comboBoxSupplier.removeAllItems();
         this._dbService = new DatabaseService();
         this._suppliers = this._dbService.findAll(Supplier.class);
@@ -56,6 +59,7 @@ public class ReceivableFormDialog extends javax.swing.JDialog {
     }
     
     public void getItems(){
+        ((DefaultComboBoxModel) this.comboxItem.getModel()).removeAllElements();
         this.comboxItem.removeAllItems();
         this._dbService = new DatabaseService();
         this._items = this._dbService.findAll(Item.class);
@@ -94,7 +98,6 @@ public class ReceivableFormDialog extends javax.swing.JDialog {
         }
         try{
            Double d = Double.parseDouble(this.textBoxCost.getText().trim());
-           
         }
         catch(NumberFormatException ex){
            counter++;
@@ -111,6 +114,12 @@ public class ReceivableFormDialog extends javax.swing.JDialog {
         catch(NumberFormatException ex){
            counter++;
            errorMessage += counter+". Quantity must be a number\n";
+           this.textBoxQuantity.setText("0");
+        }
+        
+        if(!Validator.isDateValid(this.maskBoxDate.getText().trim(), "yyyy-MM-dd")){
+            counter++;
+           errorMessage += counter+". Invalid date format\n";
            this.textBoxQuantity.setText("0");
         }
         if(counter > 0){
@@ -167,7 +176,7 @@ public class ReceivableFormDialog extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         labelItemCode.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelItemCode.setText("Item Code");
+        labelItemCode.setText("Item Name");
 
         textBoxQuantity.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         textBoxQuantity.setText("0");

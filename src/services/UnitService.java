@@ -64,7 +64,7 @@ public class UnitService {
             this._preparedStatement = Database.getTInstance().prepareStatement(sql);
             this._preparedStatement.setString(1, unit.getName());
             ResultSet resultSet = this._preparedStatement.getResultSet();
-            if(resultSet.first()){
+            if(resultSet != null){
                 result = true;
             }
         }catch(SQLException ex){

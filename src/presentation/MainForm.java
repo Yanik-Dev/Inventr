@@ -6,22 +6,13 @@
 package presentation;
 
 import common.AppLogger;
-import common.SocketConfiguration;
-import org.springframework.context.ApplicationContext; 
 import entity.User;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ContainerAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
-import java.net.Socket;
-import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
-import org.springframework.beans.BeansException;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -31,13 +22,16 @@ public class MainForm extends javax.swing.JFrame {
     //Global Class declaration of forms/views
 
     ItemInternalFrame itemView = null;
-    SupplierInternalFrame supplierView = null;
     DashboardInternalFrame dashboard = null;
     TransactionInternalFrame transFrame = null;
+    SupplierInternalFrame supplierView = null;
     UserInternalFrame userView =null;
     CategoryViewDialog categoryView = null;
     UnitViewDialog unitView =null;
-    LocationViewDialog locationView = null;
+    LocationViewDialog locationView = null;    
+    RequestFormDialog requestDialog = null;
+    ReceivableFormDialog receivableDialog = null;
+
     
     User _user = null;
     /**
@@ -45,19 +39,15 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
-        
-       /* dashboard = new DashboardInternalFrame();
-                 this.desktopPaneMain.add(dashboard);
+        long startTime = System.currentTimeMillis();
+        long elapsedTime = 0L;
 
-         try {
-            dashboard.setMaximum(true);
-          } catch (PropertyVetoException e) {
-            // Vetoed by internalFrame
-            // ... possibly add some handling for this case
-          }
-         
-        dashboard.setBorder(null);
-        dashboard.setVisible(true);*/
+        /*while (elapsedTime < 2*60*1000) {
+            //perform db poll/check
+            elapsedTime = (new Date()).getTime() - startTime;
+        }*/
+
+      
     }
     
     public MainForm(User user) {
@@ -76,9 +66,12 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPaneMain = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         transMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
         inventoryMenu = new javax.swing.JMenu();
         itemMenuItem = new javax.swing.JMenuItem();
         supplierMenuItem = new javax.swing.JMenuItem();
@@ -101,6 +94,8 @@ public class MainForm extends javax.swing.JFrame {
             .addGap(0, 516, Short.MAX_VALUE)
         );
 
+        jLabel1.setText("jLabel1");
+
         menuBar.setBackground(new java.awt.Color(51, 51, 51));
 
         transMenu.setMnemonic('T');
@@ -120,6 +115,24 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         transMenu.add(jMenuItem1);
+
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem4.setText("Resquest Item");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        transMenu.add(jMenuItem4);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setText("Add Receivables");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        transMenu.add(jMenuItem5);
 
         menuBar.add(transMenu);
 
@@ -250,8 +263,9 @@ public class MainForm extends javax.swing.JFrame {
         
         try {
             supplierView.setMaximum(true);
-          } catch (PropertyVetoException e) {
-          }
+        } catch (PropertyVetoException e) {
+          
+        }
         this.supplierView.setBorder(null);
         this.supplierView.setVisible(true);
         
@@ -273,8 +287,7 @@ public class MainForm extends javax.swing.JFrame {
         try {
             transFrame.setMaximum(true);
           } catch (PropertyVetoException e) {
-            // Vetoed by internalFrame
-            // ... possibly add some handling for this case
+            
           }
         this.transFrame.setBorder(null);
         this.transFrame.setVisible(true);
@@ -329,11 +342,62 @@ public class MainForm extends javax.swing.JFrame {
         locationView.setLocationRelativeTo(null);
         locationView.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        this.receivableDialog = new ReceivableFormDialog(this, true);
+        disableMenu(true);
+        this.receivableDialog.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                disableMenu(false);
+                receivableDialog = null;
+              }
+        });
+        
+        receivableDialog.setLocationRelativeTo(null);
+        receivableDialog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        this.requestDialog = new RequestFormDialog(this, true, this._user);
+        disableMenu(true);
+        this.requestDialog.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                disableMenu(false);
+                requestDialog = null;
+              }
+        });
+        
+        requestDialog.setLocationRelativeTo(null);
+        requestDialog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
     
     public void disableMenu(boolean value){
         this.inventoryMenu.setEnabled(!value);
         this.transMenu.setEnabled(!value);
         this.systemMenu.setEnabled(!value);
+        if(!value){
+            dashboard = new DashboardInternalFrame();
+            this.desktopPaneMain.add(dashboard);
+
+            try {
+               dashboard.setMaximum(true);
+             } catch (PropertyVetoException e) {
+               
+             }
+
+           dashboard.setBorder(null);
+           dashboard.setVisible(true);
+        }else{
+            if(dashboard != null){
+                dashboard.setVisible(false);
+                dashboard.dispose();
+                dashboard = null;
+            }
+        }
     }
     /**
      * @param args the command line arguments
@@ -380,9 +444,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPaneMain;
     private javax.swing.JMenu inventoryMenu;
     private javax.swing.JMenuItem itemMenuItem;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem supplierMenuItem;
     private javax.swing.JMenu systemMenu;

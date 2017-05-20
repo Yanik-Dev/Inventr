@@ -24,7 +24,7 @@ public class RequestService extends DatabaseService {
     public  List<Request> search(String q){
         List<Request> list = null;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Request  obj where obj.item Like :q or obj.requester LIKE :q or obj.dateRequested LIKE :q")
+            Query query = Database.getEMInstance().createQuery("Select obj from Request  obj where obj.item.itemName Like :q or obj.requester.username LIKE :q or obj.dateRequested LIKE :q")
                                                   .setParameter("q", "%"+q+"%");
 
              list = (List<Request>)query.getResultList();

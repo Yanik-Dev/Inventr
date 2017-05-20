@@ -27,7 +27,7 @@ public class ItemService extends DatabaseService {
                                                   .setParameter("name", item.getItemName()); 
 
             List<Item> i = (List<Item>)query.getResultList();
-            if(i != null) { result = true; }
+            if(!i.isEmpty()) { result = true; }
         }catch(Exception ex){
              AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{

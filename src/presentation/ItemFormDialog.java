@@ -13,6 +13,8 @@ import entity.Item;
 import entity.Location;
 import entity.Supplier;
 import entity.Unit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -23,6 +25,12 @@ import services.ItemService;
  * @author Yanik
  */
 public class ItemFormDialog extends javax.swing.JDialog {
+    SupplierFormDialog supplierDialog = null;
+    UserInternalFrame userView =null;
+    CategoryViewDialog categoryView = null;
+    UnitViewDialog unitView =null;
+    LocationViewDialog locationView = null;
+    
     List<Unit> units = new ArrayList<>();
     List<Supplier> suppliers = new ArrayList<>();    
     List<Category> categories = new ArrayList<>();
@@ -57,6 +65,7 @@ public class ItemFormDialog extends javax.swing.JDialog {
         this.getUnits();
         this.setForm(item);
         this.isUpdate = true;
+        this.ListSupplier.setModel(this.supplierListModel);
     }
     
     public void getSuppliers(){
@@ -321,6 +330,11 @@ public class ItemFormDialog extends javax.swing.JDialog {
         labelDescription.setText("Description");
 
         addStorageLocation.setText("jButton1");
+        addStorageLocation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStorageLocationActionPerformed(evt);
+            }
+        });
 
         buttonAddCategory.setText("jButton1");
         buttonAddCategory.addActionListener(new java.awt.event.ActionListener() {
@@ -410,6 +424,11 @@ public class ItemFormDialog extends javax.swing.JDialog {
         });
 
         buttonAddSupplier.setText("jButton1");
+        buttonAddSupplier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddSupplierActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -451,6 +470,11 @@ public class ItemFormDialog extends javax.swing.JDialog {
         labelUnit.setText("Unit");
 
         buttonAddUnit.setText("jButton1");
+        buttonAddUnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddUnitActionPerformed(evt);
+            }
+        });
 
         textBoxUnitCost.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         textBoxUnitCost.setText("0.00");
@@ -607,7 +631,18 @@ public class ItemFormDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonAddCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddCategoryActionPerformed
+        categoryView = new CategoryViewDialog(null, true);
         
+        this.categoryView.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                getCategories();
+                categoryView = null;
+              }
+        });
+        categoryView.setLocationRelativeTo(null);
+        categoryView.setVisible(true);
     }//GEN-LAST:event_buttonAddCategoryActionPerformed
 
     private void buttonActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionActionPerformed
@@ -666,6 +701,51 @@ public class ItemFormDialog extends javax.swing.JDialog {
     private void buttonSupplierAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSupplierAddActionPerformed
         this.addSuppliersToList();
     }//GEN-LAST:event_buttonSupplierAddActionPerformed
+
+    private void addStorageLocationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStorageLocationActionPerformed
+        this.locationView = new LocationViewDialog(null, true);
+        
+        this.locationView.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                getLocations();
+                supplierDialog = null;
+              }
+        });
+        locationView.setLocationRelativeTo(null);
+        locationView.setVisible(true);
+    }//GEN-LAST:event_addStorageLocationActionPerformed
+
+    private void buttonAddUnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddUnitActionPerformed
+        this.unitView = new UnitViewDialog(null, true);
+        
+        this.unitView.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                getUnits();
+                unitView = null;
+              }
+        });
+        unitView.setLocationRelativeTo(null);
+        unitView.setVisible(true);
+    }//GEN-LAST:event_buttonAddUnitActionPerformed
+
+    private void buttonAddSupplierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddSupplierActionPerformed
+        this.supplierDialog = new SupplierFormDialog(null, true);
+        
+        this.supplierDialog.addWindowListener(new WindowAdapter()
+            {
+              public void windowClosed(WindowEvent e)
+              {
+                getSuppliers();
+                supplierDialog = null;
+              }
+        });
+        supplierDialog.setLocationRelativeTo(null);
+        supplierDialog.setVisible(true);
+    }//GEN-LAST:event_buttonAddSupplierActionPerformed
 
    
 

@@ -21,11 +21,11 @@ public class LocationService extends DatabaseService {
     public  boolean exist(Location location){
         boolean result = false;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Location  obj where obj.locationName = :name")
+            Query query = Database.getEMInstance().createQuery("Select obj from Location  obj where obj.name = :name")
                                                   .setParameter("name", location.getName());
 
             List<Location> i = (List<Location>)query.getResultList();
-            if(i != null) { result = true; }
+            if(!i.isEmpty()) { result = true; }
         }catch(Exception ex){
              AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{

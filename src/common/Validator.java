@@ -8,6 +8,9 @@ package common;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -46,5 +49,26 @@ public class Validator {
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(phoneNumberRegex);
         java.util.regex.Matcher m = p.matcher(number);
         return m.matches();
+    }
+    
+    public static boolean isDateValid(String dateToValidate, String dateFromat){
+
+        if(dateToValidate == null){
+                return false;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFromat);
+        sdf.setLenient(false);
+
+        try {
+            Date date = sdf.parse(dateToValidate);
+            System.out.println(date);
+        } catch (ParseException e) {
+
+                e.printStackTrace();
+                return false;
+        }
+
+        return true;
     }
 }

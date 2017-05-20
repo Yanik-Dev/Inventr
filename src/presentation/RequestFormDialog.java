@@ -13,6 +13,7 @@ import entity.Request;
 import entity.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import services.DatabaseService;
 
@@ -46,6 +47,7 @@ public class RequestFormDialog extends javax.swing.JDialog {
     }
     
     public void getItems(){
+         ((DefaultComboBoxModel) this.cmboxItem.getModel()).removeAllElements();
         this._items = this._dbService.findAll(Item.class);
         for(Item item : this._items){
             this.cmboxItem.addItem(item.getItemName());
@@ -76,6 +78,10 @@ public class RequestFormDialog extends javax.swing.JDialog {
         String errorMessage = "";
         int counter = 0;
         
+        if(this.cmboxItem.getSelectedIndex() < 0){
+            counter++;
+            errorMessage += counter+". A Item is required\n";
+        }
         try{
            Double d = Double.parseDouble(this.textboxAmount.getText().trim());
            if(d < 1){
@@ -88,12 +94,7 @@ public class RequestFormDialog extends javax.swing.JDialog {
            errorMessage += counter+". Amount must be a number\n";
            this.textboxAmount.setText("0");
         }
-   
-
-        if(this.cmboxItem.getSelectedIndex() < 0){
-            counter++;
-            errorMessage += counter+". A unit is required\n";
-        }
+  
         
         if(counter > 0){
             MessageBox.errorBox(this, "- Invalid Entries", errorMessage);

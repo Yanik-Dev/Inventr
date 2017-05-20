@@ -24,7 +24,7 @@ public class ReceivableService extends DatabaseService {
     public  List<Receivable> search(String q){
         List<Receivable> list = null;
         try{
-            Query query = Database.getEMInstance().createQuery("Select obj from Receivable  obj where obj.item Like :q or obj.dateReceived LIKE :q")
+            Query query = Database.getEMInstance().createQuery("Select obj from Receivable  obj where obj.item.itemName Like :q or obj.dateReceived LIKE :q")
                                                   .setParameter("q", "%"+q+"%");
 
              list = (List<Receivable>)query.getResultList();
