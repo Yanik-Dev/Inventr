@@ -399,17 +399,17 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void buttonDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDashboardActionPerformed
-        disableMenu(true);
+        disableMenu(false);
     }//GEN-LAST:event_buttonDashboardActionPerformed
     
     public void disableMenu(boolean value){
         this.inventoryMenu.setEnabled(!value);
         this.transMenu.setEnabled(!value);
         this.systemMenu.setEnabled(!value);
-        if(!value){
-            dashboard.setVisible(true);
+        if(dashboard.isVisible()){
+            dashboard.setVisible(!dashboard.isVisible());
         }else{
-            dashboard.setVisible(false);
+            dashboard.setVisible(dashboard.isVisible());
         }
     }
     /**

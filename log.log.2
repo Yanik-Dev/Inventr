@@ -772,3 +772,60 @@ Query: InsertObjectQuery(entity.Location@752788b)</message>
     </frame>
   </exception>
 </record>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-05-22T18:42:12</date>
+  <millis>1495496532400</millis>
+  <sequence>2</sequence>
+  <logger>sockets.RequestHandler</logger>
+  <level>INFO</level>
+  <class>sockets.RequestHandler</class>
+  <method>run</method>
+  <thread>13</thread>
+  <message>A Client has discounted</message>
+  <exception>
+    <message>java.net.SocketException: Connection reset</message>
+    <frame>
+      <class>java.net.SocketInputStream</class>
+      <method>read</method>
+      <line>210</line>
+    </frame>
+    <frame>
+      <class>java.net.SocketInputStream</class>
+      <method>read</method>
+      <line>141</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream$PeekInputStream</class>
+      <method>read</method>
+      <line>2606</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream$PeekInputStream</class>
+      <method>readFully</method>
+      <line>2622</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream$BlockDataInputStream</class>
+      <method>readShort</method>
+      <line>3099</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream</class>
+      <method>readStreamHeader</method>
+      <line>853</line>
+    </frame>
+    <frame>
+      <class>java.io.ObjectInputStream</class>
+      <method>&lt;init&gt;</method>
+      <line>349</line>
+    </frame>
+    <frame>
+      <class>sockets.RequestHandler</class>
+      <method>run</method>
+      <line>31</line>
+    </frame>
+  </exception>
+</record>
