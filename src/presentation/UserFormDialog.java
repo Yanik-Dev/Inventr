@@ -84,13 +84,21 @@ public class UserFormDialog extends javax.swing.JDialog {
     public void setForm(User user){
         this._user = user;
         this.textBoxFirstName.setText(user.getFirstname());
-        this.textBoxUsername.setText(user.getLastname());
+        this.textBoxLastName.setText(user.getLastname());
         this.textBoxUsername.setText(user.getUsername());
 
         for(Rule rule : user.getRules()){
             this._assignedRules.add(rule);
             this.assignedRulesList.addElement(rule.getName());
+            int index = this.availableRulesList.indexOf(rule.getName());
+            if(index > -1){
+                this.availableRulesList.remove(index);
+            }
             
+        }
+        if(user.getRules().size() == 20){
+            this.isSuperUser(true);
+            this.checkBoxSuperUser.setSelected(true);
         }
         this.listAssignedRules.setModel(this.assignedRulesList);
     }
@@ -108,13 +116,17 @@ public class UserFormDialog extends javax.swing.JDialog {
             errorMessage += counter+". Last name is required\n";
         }
         
-        if(this.textboxPassword.getText().trim().equals("") && this._user.getPassword().trim().equals("")){
+        if(this.textboxPassword.getText() == null){
             counter++;
             errorMessage += counter+". A Password is required\n";
         }else{
             if(!this.textboxPassword.getText().trim().equals(this.textboxConfirmPassword.getText().trim())){    
                 counter++;
                 errorMessage += counter+". Passwords are not equal\n";
+            }
+            if(this.textboxPassword.getText().length() < 8){    
+                counter++;
+                errorMessage += counter+". Password cannot be less than 8 letters\n";
             }
         }
         if(this.textBoxUsername.getText().trim().equals("")){
@@ -142,8 +154,32 @@ public class UserFormDialog extends javax.swing.JDialog {
         this.getRules();
     }
     
-    public void setUser(){     
-        if(this._user.getPassword().equals("")){
+    public void isSuperUser(boolean value){
+        if(value){
+            this.listAssignedRules.setEnabled(false);
+            this.listAvailableRules.setEnabled(false);
+            this.buttonAssign.setEnabled(false);
+            this.buttonUnassign.setEnabled(false);
+        }else{
+            this.listAssignedRules.setEnabled(true);
+            this.listAvailableRules.setEnabled(true);
+            this.buttonAssign.setEnabled(true);
+            this.buttonUnassign.setEnabled(true); 
+
+
+        }
+    }
+    public void setUser(){ 
+        if(this._user != null){
+            if(this._user.getPassword().equals("")){
+                String salt = Security.generateSalt();
+                String password = this.textboxPassword.getText().trim();
+                String hash = Security.get_SHA_512_SecurePassword(password, salt);
+                this._user.setPassword(hash);
+                this._user.setSalt(salt);
+            }
+        }else{
+            this._user = new User();
             String salt = Security.generateSalt();
             String password = this.textboxPassword.getText().trim();
             String hash = Security.get_SHA_512_SecurePassword(password, salt);
@@ -154,7 +190,12 @@ public class UserFormDialog extends javax.swing.JDialog {
         this._user.setLastname(this.textBoxLastName.getText().trim());
         this._user.setUsername(this.textBoxUsername.getText().trim());
         this._user.setStatus(Status.ACTIVE);
-        this._user.setRules(this._assignedRules);
+        if(this.checkBoxSuperUser.isSelected()){
+            this._user.setRules(this._availableRules);
+        }else{
+            this._user.setRules(this._assignedRules);
+        }
+        
     
     }
     /**
@@ -182,12 +223,13 @@ public class UserFormDialog extends javax.swing.JDialog {
         listAssignedRules = new javax.swing.JList<>();
         labelItemName2 = new javax.swing.JLabel();
         labelItemName3 = new javax.swing.JLabel();
-        labelItemName4 = new javax.swing.JLabel();
-        textboxPassword = new javax.swing.JPasswordField();
-        textboxConfirmPassword = new javax.swing.JPasswordField();
-        labelItemName5 = new javax.swing.JLabel();
         buttonAssign = new javax.swing.JButton();
         buttonUnassign = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        labelItemName4 = new javax.swing.JLabel();
+        textboxConfirmPassword = new javax.swing.JPasswordField();
+        textboxPassword = new javax.swing.JPasswordField();
+        labelItemName5 = new javax.swing.JLabel();
         buttonAction = new javax.swing.JButton();
         buttonClear = new javax.swing.JButton();
         buttonClear1 = new javax.swing.JButton();
@@ -212,6 +254,11 @@ public class UserFormDialog extends javax.swing.JDialog {
         labelItemCode1.setText("Last Name");
 
         checkBoxSuperUser.setText("Super User");
+        checkBoxSuperUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxSuperUserActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(listAvailableRules);
 
@@ -222,12 +269,6 @@ public class UserFormDialog extends javax.swing.JDialog {
 
         labelItemName3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelItemName3.setText("Available Rules");
-
-        labelItemName4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelItemName4.setText("Password");
-
-        labelItemName5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelItemName5.setText("Confirm Password");
 
         buttonAssign.setText("Assign");
         buttonAssign.addActionListener(new java.awt.event.ActionListener() {
@@ -243,6 +284,44 @@ public class UserFormDialog extends javax.swing.JDialog {
             }
         });
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        labelItemName4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelItemName4.setText("Password");
+
+        labelItemName5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelItemName5.setText("Confirm Password");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textboxPassword)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelItemName4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelItemName5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 57, Short.MAX_VALUE))
+                    .addComponent(textboxConfirmPassword))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelItemName4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textboxPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelItemName5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textboxConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout panelContentLayout = new javax.swing.GroupLayout(panelContent);
         panelContent.setLayout(panelContentLayout);
         panelContentLayout.setHorizontalGroup(
@@ -250,69 +329,49 @@ public class UserFormDialog extends javax.swing.JDialog {
             .addGroup(panelContentLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textBoxUsername)
+                    .addComponent(labelItemName3)
                     .addGroup(panelContentLayout.createSequentialGroup()
-                        .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(checkBoxSuperUser)
-                            .addComponent(labelItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelContentLayout.createSequentialGroup()
-                                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContentLayout.createSequentialGroup()
-                                        .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jScrollPane2)
-                                            .addComponent(labelItemName3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(textboxPassword))
-                                        .addGap(13, 13, 13)
-                                        .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(buttonUnassign, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(buttonAssign, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                    .addGroup(panelContentLayout.createSequentialGroup()
-                                        .addComponent(labelItemName4, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(234, 234, 234)))
-                                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelItemName5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jScrollPane3)
-                                        .addComponent(labelItemName2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(textboxConfirmPassword, javax.swing.GroupLayout.Alignment.TRAILING))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContentLayout.createSequentialGroup()
-                                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelItemCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textBoxFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelItemCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textBoxLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(buttonAssign, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonUnassign)))
+                    .addComponent(labelItemCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelItemCode, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textBoxFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(checkBoxSuperUser)
+                    .addComponent(labelItemName, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(textBoxUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                        .addComponent(textBoxLastName, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelItemName2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         panelContentLayout.setVerticalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContentLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelItemCode)
-                    .addComponent(labelItemCode1))
+                .addComponent(labelItemCode)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textBoxFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textBoxLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelContentLayout.createSequentialGroup()
+                        .addComponent(textBoxFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelItemCode1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textBoxLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelItemName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textBoxUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelItemName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textBoxUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelItemName4)
-                    .addComponent(labelItemName5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textboxPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textboxConfirmPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(checkBoxSuperUser)
-                .addGap(7, 7, 7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelItemName2)
                     .addComponent(labelItemName3))
@@ -359,13 +418,13 @@ public class UserFormDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addComponent(panelContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(buttonAction, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -374,12 +433,11 @@ public class UserFormDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(panelContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonClear1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAction, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -403,9 +461,7 @@ public class UserFormDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,6 +535,10 @@ public class UserFormDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_buttonUnassignActionPerformed
 
+    private void checkBoxSuperUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxSuperUserActionPerformed
+        this.isSuperUser(this.checkBoxSuperUser.isSelected());
+    }//GEN-LAST:event_checkBoxSuperUserActionPerformed
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -490,6 +550,7 @@ public class UserFormDialog extends javax.swing.JDialog {
     private javax.swing.JCheckBox checkBoxSuperUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel labelItemCode;

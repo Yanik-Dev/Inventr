@@ -27,7 +27,6 @@ public class User extends Person implements Serializable{
     
     @Column(name="USERNAME")
     private String username;
-    @OneToOne(cascade=CascadeType.ALL,targetEntity = Email.class)
     private String password;
     private String salt;
     private Status status;

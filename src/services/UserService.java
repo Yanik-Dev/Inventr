@@ -26,7 +26,7 @@ public class UserService extends DatabaseService {
                                                   .setParameter("code", item.getUsername());
 
             List<User> i = (List<User>)query.getResultList();
-            if(i.isEmpty()) { result = true; }
+            if(!i.isEmpty()) { result = true; }
         }catch(Exception ex){
              AppLogger.getLogger(DatabaseService.class.getName()).log(Level.SEVERE, "A serious Exception has occurred", ex);
         }finally{

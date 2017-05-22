@@ -39,14 +39,18 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
-        long startTime = System.currentTimeMillis();
-        long elapsedTime = 0L;
+       
+        dashboard = new DashboardInternalFrame();
+        this.desktopPaneMain.add(dashboard);
 
-        /*while (elapsedTime < 2*60*1000) {
-            //perform db poll/check
-            elapsedTime = (new Date()).getTime() - startTime;
-        }*/
+        try {
+            dashboard.setMaximum(true);
+        } catch (PropertyVetoException e) {
 
+        }
+
+        dashboard.setBorder(null);
+        dashboard.setVisible(true);
       
     }
     
@@ -66,6 +70,8 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPaneMain = new javax.swing.JDesktopPane();
+        jToolBar1 = new javax.swing.JToolBar();
+        buttonDashboard = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         transMenu = new javax.swing.JMenu();
@@ -83,15 +89,32 @@ public class MainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jToolBar1.setRollover(true);
+
+        buttonDashboard.setText("Dashboard");
+        buttonDashboard.setFocusable(false);
+        buttonDashboard.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonDashboard.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonDashboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDashboardActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonDashboard);
+
+        desktopPaneMain.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout desktopPaneMainLayout = new javax.swing.GroupLayout(desktopPaneMain);
         desktopPaneMain.setLayout(desktopPaneMainLayout);
         desktopPaneMainLayout.setHorizontalGroup(
             desktopPaneMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1186, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE)
         );
         desktopPaneMainLayout.setVerticalGroup(
             desktopPaneMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+            .addGroup(desktopPaneMainLayout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 491, Short.MAX_VALUE))
         );
 
         jLabel1.setText("jLabel1");
@@ -233,7 +256,7 @@ public class MainForm extends javax.swing.JFrame {
           } catch (PropertyVetoException e) {
           }
         this.itemView.setBorder(null);
-        this.itemView.setVisible(true);
+        this.itemView.setVisible(false);
     }//GEN-LAST:event_itemMenuItemActionPerformed
 
     private void categoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryMenuItemActionPerformed
@@ -374,29 +397,19 @@ public class MainForm extends javax.swing.JFrame {
         requestDialog.setLocationRelativeTo(null);
         requestDialog.setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void buttonDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDashboardActionPerformed
+        disableMenu(true);
+    }//GEN-LAST:event_buttonDashboardActionPerformed
     
     public void disableMenu(boolean value){
         this.inventoryMenu.setEnabled(!value);
         this.transMenu.setEnabled(!value);
         this.systemMenu.setEnabled(!value);
         if(!value){
-            dashboard = new DashboardInternalFrame();
-            this.desktopPaneMain.add(dashboard);
-
-            try {
-               dashboard.setMaximum(true);
-             } catch (PropertyVetoException e) {
-               
-             }
-
-           dashboard.setBorder(null);
-           dashboard.setVisible(true);
+            dashboard.setVisible(true);
         }else{
-            if(dashboard != null){
-                dashboard.setVisible(false);
-                dashboard.dispose();
-                dashboard = null;
-            }
+            dashboard.setVisible(false);
         }
     }
     /**
@@ -440,6 +453,7 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonDashboard;
     private javax.swing.JMenuItem categoryMenuItem;
     private javax.swing.JDesktopPane desktopPaneMain;
     private javax.swing.JMenu inventoryMenu;
@@ -450,6 +464,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem supplierMenuItem;
     private javax.swing.JMenu systemMenu;

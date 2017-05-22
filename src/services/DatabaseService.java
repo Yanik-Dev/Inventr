@@ -6,6 +6,7 @@
 
 package services;
 
+import services.interfaces.IDbService;
 import common.AppLogger;
 import common.Database;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.persistence.Query;
  *
  * @author Vice Principal
  */
-public class  DatabaseService{
+public class  DatabaseService implements IDbService{
     
     /**
      * maps an object decorated with the @Entity annotation to a database table
