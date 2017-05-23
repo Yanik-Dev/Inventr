@@ -10,6 +10,7 @@ import common.Database;
 import entity.User;
 import java.util.List;
 import java.util.logging.Level;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -36,6 +37,23 @@ public class UserService extends DatabaseService {
         return result;
     }
     
+    public  static User findOne(User user){
+        User result = null;
+        try{
+            Query query = Database.getEMInstance().createQuery("Select obj from User  obj where obj.username = :user")
+                                                  .setParameter("user", user.getUsername());
+
+            result = (User) query.getSingleResult();
+           
+        }catch(NoResultException ex){
+            result = null;
+             AppLogger.getLogger(DatabaseService.class.getName()).log(Level.INFO, "No user result found", ex);
+        }finally{
+            Database.closeEM();
+        }
+        
+        return result;
+    }
     public  List<User> search(String q){
         List<User> list = null;
         try{

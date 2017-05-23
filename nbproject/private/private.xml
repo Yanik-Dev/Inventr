@@ -4,8 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/acer/Documents/NetBeansProjects/Inventr/src/presentation/MainForm.java</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/Inventr/src/sockets/Server.java</file>
-            <file>file:/C:/Users/acer/Documents/NetBeansProjects/Inventr/src/presentation/DashboardInternalFrame.java</file>
+            <file>file:/C:/Users/acer/Documents/NetBeansProjects/Inventr/src/META-INF/persistence.xml</file>
+            <file>file:/C:/Users/acer/Documents/NetBeansProjects/Inventr/src/META-INF/init_script.sql</file>
         </group>
     </open-files>
 </project-private>

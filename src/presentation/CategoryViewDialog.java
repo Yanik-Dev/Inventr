@@ -126,7 +126,6 @@ public class CategoryViewDialog extends javax.swing.JDialog {
         tableCategories = new javax.swing.JTable();
         buttonNew = new javax.swing.JButton();
         buttonEdit = new javax.swing.JButton();
-        buttonDelete = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         buttonCancel = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -170,13 +169,6 @@ public class CategoryViewDialog extends javax.swing.JDialog {
             }
         });
 
-        buttonDelete.setText("Delete");
-        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeleteActionPerformed(evt);
-            }
-        });
-
         buttonCancel.setText("Cancel");
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -200,8 +192,7 @@ public class CategoryViewDialog extends javax.swing.JDialog {
                         .addComponent(buttonNew)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonDelete))
+                        .addGap(69, 69, 69))
                     .addComponent(textBoxSearch)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -224,7 +215,6 @@ public class CategoryViewDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDelete)
                     .addComponent(buttonNew, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonEdit))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -278,16 +268,6 @@ public class CategoryViewDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_buttonEditActionPerformed
 
-    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        int row = this.tableCategories.getSelectedRow();
-        //TODO: fix delete
-        Category categoryToDelete = this.categories.get(row);
-        System.out.println("holll"+categoryToDelete.getName());
-        if(categoryToDelete != null){
-            this.deleteCategory(categoryToDelete);
-        }
-    }//GEN-LAST:event_buttonDeleteActionPerformed
-
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         this.setVisible(false);
         this.dispose();
@@ -300,7 +280,6 @@ public class CategoryViewDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
-    private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonNew;
     private javax.swing.JLabel jLabel5;

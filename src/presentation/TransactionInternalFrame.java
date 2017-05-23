@@ -131,7 +131,6 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
         tableRequest = new javax.swing.JTable();
         txtboxSearch = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        buttonDelete = new javax.swing.JButton();
         buttonEdit = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -139,7 +138,6 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
         tableReceivable = new javax.swing.JTable();
         txtboxSearch2 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        buttonDelete1 = new javax.swing.JButton();
         buttonEdit1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
@@ -239,8 +237,6 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonDelete.setText("Delete");
-
         buttonEdit.setText("Edit");
         buttonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,9 +257,7 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(buttonEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonDelete)
-                        .addGap(1056, 1056, 1056))
+                        .addGap(1056, 1133, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1)
@@ -284,9 +278,7 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDelete)
-                    .addComponent(buttonEdit))
+                .addComponent(buttonEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -342,13 +334,6 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonDelete1.setText("Delete");
-        buttonDelete1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDelete1ActionPerformed(evt);
-            }
-        });
-
         buttonEdit1.setText("Edit");
         buttonEdit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -369,9 +354,7 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(buttonEdit1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonDelete1)
-                        .addGap(1056, 1056, 1056))
+                        .addGap(1056, 1133, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator3)
@@ -392,9 +375,7 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDelete1)
-                    .addComponent(buttonEdit1))
+                .addComponent(buttonEdit1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(73, Short.MAX_VALUE))
@@ -408,7 +389,7 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1199, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -487,15 +468,9 @@ public class TransactionInternalFrame extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEdit1ActionPerformed
 
-    private void buttonDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDelete1ActionPerformed
-       
-    }//GEN-LAST:event_buttonDelete1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonClose;
-    private javax.swing.JButton buttonDelete;
-    private javax.swing.JButton buttonDelete1;
     private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonEdit1;
     private javax.swing.Box.Filler filler1;

@@ -60,6 +60,20 @@ public class DashboardInternalFrame extends javax.swing.JInternalFrame {
         this.listUser.setModel(onlineUserModel);
     }
     
+    public DashboardInternalFrame(User user) {
+        initComponents();
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        this.recentItems();
+        this.countItems();
+        this.countUsers();
+        this.countRequests();
+        this.getRecentSuppliers();
+        this.getRecentItems();
+        this.connect();
+        this.listUser.setModel(onlineUserModel);
+        this.user = user;
+    }
+    
     public void setOnlineUsers(List<User> users){
         ((DefaultListModel)this.listUser.getModel()).clear();
         for(User user : users){
@@ -83,11 +97,10 @@ public class DashboardInternalFrame extends javax.swing.JInternalFrame {
             Socket socket = new Socket(socketConfig.getServer(), socketConfig.getPort());
             System.out.println("You connected to : "+socketConfig.getServer());
             
-            User newUser = new User();
-            newUser.setUsername("User: J");
+            
             this.isOnline(true);
             ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            outputStream.writeObject(newUser);
+            outputStream.writeObject(this.user);
             outputStream.flush();
             clientThread = new ClientThread(socket, this);
             clientThread.start();

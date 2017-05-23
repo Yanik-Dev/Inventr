@@ -6,6 +6,7 @@
 package presentation;
 
 import common.AppLogger;
+import entity.Permission;
 import entity.User;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,8 +40,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
-       
-        dashboard = new DashboardInternalFrame();
+        dashboard = new DashboardInternalFrame(this._user);
         this.desktopPaneMain.add(dashboard);
 
         try {
@@ -51,12 +51,78 @@ public class MainForm extends javax.swing.JFrame {
 
         dashboard.setBorder(null);
         dashboard.setVisible(true);
-      
     }
     
     public MainForm(User user) {
         initComponents();
         this._user = user;
+        this.lblUsername.setText("USER: "+user.getUsername().toUpperCase());
+        dashboard = new DashboardInternalFrame(this._user);
+        this.desktopPaneMain.add(dashboard);
+
+        try {
+            dashboard.setMaximum(true);
+        } catch (PropertyVetoException e) {
+
+        }
+
+        dashboard.setBorder(null);
+        dashboard.setVisible(true);
+        this.checkPermission();
+    }
+    
+    public void checkPermission(){
+        this.categoryMenuItem.setVisible(false);
+        this.storageMenuItem.setVisible(false);
+        this.recMenuItem.setVisible(false);
+        this.reqMenuItem.setVisible(false);
+        this.userMenuItem.setVisible(false);
+        this.supplierMenuItem.setVisible(false);
+        this.unitMenuItem.setVisible(false);
+        buttonDashboard.setVisible(false);
+        this.dashboard.setVisible(false);
+        this.logMenuItem.setVisible(false);
+        this.itemMenuItem.setVisible(false);
+        for(Permission p : this._user.getRules()){
+            if(p.getName().equals("View Dashboard")){
+                buttonDashboard.setVisible(true);
+                this.dashboard.setVisible(true);
+                continue;
+            }
+            if(p.getName().equals("View Transaction Logs")){
+                this.logMenuItem.setVisible(true);
+                continue;
+            }
+            if(p.getName().equals("Manage Items")){
+                this.itemMenuItem.setVisible(true);
+                continue;
+            }
+            if(p.getName().equals("Manage Suppliers")){
+                this.supplierMenuItem.setVisible(true);
+                continue;
+            }
+            if(p.getName().equals("Manage Users")){
+                this.userMenuItem.setVisible(true);
+                continue;
+            }
+            if(p.getName().equals("Request Items")){
+                this.reqMenuItem.setVisible(true);
+                continue;
+            }
+            if(p.getName().equals("Add Receivables")){
+                this.recMenuItem.setVisible(true);
+            }
+            if(p.getName().equals("Manage Units")){
+                this.unitMenuItem.setVisible(true);
+            }
+            if(p.getName().equals("Manage Locations")){
+                this.storageMenuItem.setVisible(true);
+            }
+            if(p.getName().equals("Manage  Categories")){
+                this.categoryMenuItem.setVisible(true);
+            }
+            
+        }
     }
     
 
@@ -72,18 +138,20 @@ public class MainForm extends javax.swing.JFrame {
         desktopPaneMain = new javax.swing.JDesktopPane();
         jToolBar1 = new javax.swing.JToolBar();
         buttonDashboard = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        lblUsername = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         transMenu = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        logMenuItem = new javax.swing.JMenuItem();
+        reqMenuItem = new javax.swing.JMenuItem();
+        recMenuItem = new javax.swing.JMenuItem();
         inventoryMenu = new javax.swing.JMenu();
         itemMenuItem = new javax.swing.JMenuItem();
         supplierMenuItem = new javax.swing.JMenuItem();
         categoryMenuItem = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        unitMenuItem = new javax.swing.JMenuItem();
+        storageMenuItem = new javax.swing.JMenuItem();
         systemMenu = new javax.swing.JMenu();
         userMenuItem = new javax.swing.JMenuItem();
 
@@ -101,6 +169,8 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(buttonDashboard);
+        jToolBar1.add(jSeparator1);
+        jToolBar1.add(lblUsername);
 
         desktopPaneMain.setLayer(jToolBar1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -130,32 +200,32 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem1.setText("Logs");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        logMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        logMenuItem.setText("Logs");
+        logMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                logMenuItemActionPerformed(evt);
             }
         });
-        transMenu.add(jMenuItem1);
+        transMenu.add(logMenuItem);
 
-        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem4.setText("Resquest Item");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        reqMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        reqMenuItem.setText("Resquest Item");
+        reqMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                reqMenuItemActionPerformed(evt);
             }
         });
-        transMenu.add(jMenuItem4);
+        transMenu.add(reqMenuItem);
 
-        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem5.setText("Add Receivables");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        recMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
+        recMenuItem.setText("Add Receivables");
+        recMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                recMenuItemActionPerformed(evt);
             }
         });
-        transMenu.add(jMenuItem5);
+        transMenu.add(recMenuItem);
 
         menuBar.add(transMenu);
 
@@ -190,23 +260,23 @@ public class MainForm extends javax.swing.JFrame {
         });
         inventoryMenu.add(categoryMenuItem);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setText("Unit Management");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        unitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        unitMenuItem.setText("Unit Management");
+        unitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                unitMenuItemActionPerformed(evt);
             }
         });
-        inventoryMenu.add(jMenuItem2);
+        inventoryMenu.add(unitMenuItem);
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setText("Storage Management");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        storageMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        storageMenuItem.setText("Storage Management");
+        storageMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                storageMenuItemActionPerformed(evt);
             }
         });
-        inventoryMenu.add(jMenuItem3);
+        inventoryMenu.add(storageMenuItem);
 
         menuBar.add(inventoryMenu);
 
@@ -247,6 +317,7 @@ public class MainForm extends javax.swing.JFrame {
         this.itemView.addInternalFrameListener(new InternalFrameAdapter(){
              public void internalFrameClosed(InternalFrameEvent e) {
                disableMenu(false);
+               itemView = null;
              }
          });
         this.desktopPaneMain.add(this.itemView);
@@ -256,7 +327,7 @@ public class MainForm extends javax.swing.JFrame {
           } catch (PropertyVetoException e) {
           }
         this.itemView.setBorder(null);
-        this.itemView.setVisible(false);
+        this.itemView.setVisible(true);
     }//GEN-LAST:event_itemMenuItemActionPerformed
 
     private void categoryMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryMenuItemActionPerformed
@@ -280,6 +351,7 @@ public class MainForm extends javax.swing.JFrame {
          this.supplierView.addInternalFrameListener(new InternalFrameAdapter(){
              public void internalFrameClosed(InternalFrameEvent e) {
                disableMenu(false);
+               supplierView = null;
              }
          });
         this.desktopPaneMain.add(this.supplierView);
@@ -298,12 +370,13 @@ public class MainForm extends javax.swing.JFrame {
       
     }//GEN-LAST:event_transMenuActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void logMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logMenuItemActionPerformed
          this.transFrame = new TransactionInternalFrame();
          disableMenu(true);
          this.transFrame.addInternalFrameListener(new InternalFrameAdapter(){
              public void internalFrameClosed(InternalFrameEvent e) {
                disableMenu(false);
+               transFrame =null;
              }
          });
         this.desktopPaneMain.add(this.transFrame);
@@ -314,7 +387,7 @@ public class MainForm extends javax.swing.JFrame {
           }
         this.transFrame.setBorder(null);
         this.transFrame.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_logMenuItemActionPerformed
 
     private void userMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userMenuItemActionPerformed
         this.userView = new UserInternalFrame();
@@ -322,6 +395,7 @@ public class MainForm extends javax.swing.JFrame {
         this.userView.addInternalFrameListener(new InternalFrameAdapter(){
              public void internalFrameClosed(InternalFrameEvent e) {
                disableMenu(false);
+               userView = null;
              }
          });
         this.desktopPaneMain.add(this.userView);
@@ -334,7 +408,7 @@ public class MainForm extends javax.swing.JFrame {
         this.userView.setVisible(true);
     }//GEN-LAST:event_userMenuItemActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void unitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitMenuItemActionPerformed
         this.unitView = new UnitViewDialog(this, true);
         disableMenu(true);
         this.unitView.addWindowListener(new WindowAdapter()
@@ -348,9 +422,9 @@ public class MainForm extends javax.swing.JFrame {
         
         unitView.setLocationRelativeTo(null);
         unitView.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_unitMenuItemActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void storageMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storageMenuItemActionPerformed
        this.locationView = new LocationViewDialog(this, true);
         disableMenu(true);
         this.locationView.addWindowListener(new WindowAdapter()
@@ -364,9 +438,9 @@ public class MainForm extends javax.swing.JFrame {
         
         locationView.setLocationRelativeTo(null);
         locationView.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_storageMenuItemActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void recMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recMenuItemActionPerformed
         this.receivableDialog = new ReceivableFormDialog(this, true);
         disableMenu(true);
         this.receivableDialog.addWindowListener(new WindowAdapter()
@@ -380,9 +454,9 @@ public class MainForm extends javax.swing.JFrame {
         
         receivableDialog.setLocationRelativeTo(null);
         receivableDialog.setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_recMenuItemActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void reqMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reqMenuItemActionPerformed
         this.requestDialog = new RequestFormDialog(this, true, this._user);
         disableMenu(true);
         this.requestDialog.addWindowListener(new WindowAdapter()
@@ -396,10 +470,20 @@ public class MainForm extends javax.swing.JFrame {
         
         requestDialog.setLocationRelativeTo(null);
         requestDialog.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_reqMenuItemActionPerformed
 
     private void buttonDashboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDashboardActionPerformed
-        disableMenu(false);
+       dashboard = new DashboardInternalFrame(this._user);
+        this.desktopPaneMain.add(dashboard);
+
+        try {
+            dashboard.setMaximum(true);
+        } catch (PropertyVetoException e) {
+
+        }
+
+        dashboard.setBorder(null);
+        dashboard.setVisible(true);
     }//GEN-LAST:event_buttonDashboardActionPerformed
     
     public void disableMenu(boolean value){
@@ -407,9 +491,9 @@ public class MainForm extends javax.swing.JFrame {
         this.transMenu.setEnabled(!value);
         this.systemMenu.setEnabled(!value);
         if(dashboard.isVisible()){
-            dashboard.setVisible(!dashboard.isVisible());
+            dashboard.setVisible(false);
         }else{
-            dashboard.setVisible(dashboard.isVisible());
+            dashboard.setVisible(true);
         }
     }
     /**
@@ -459,16 +543,18 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu inventoryMenu;
     private javax.swing.JMenuItem itemMenuItem;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblUsername;
+    private javax.swing.JMenuItem logMenuItem;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem recMenuItem;
+    private javax.swing.JMenuItem reqMenuItem;
+    private javax.swing.JMenuItem storageMenuItem;
     private javax.swing.JMenuItem supplierMenuItem;
     private javax.swing.JMenu systemMenu;
     private javax.swing.JMenu transMenu;
+    private javax.swing.JMenuItem unitMenuItem;
     private javax.swing.JMenuItem userMenuItem;
     // End of variables declaration//GEN-END:variables
 }

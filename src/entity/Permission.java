@@ -16,7 +16,7 @@ import javax.persistence.Id;
  * @author Yanik
  */
 @Entity
-public class Rule implements Serializable {
+public class Permission implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

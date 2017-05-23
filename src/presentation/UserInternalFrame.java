@@ -7,7 +7,7 @@ package presentation;
 
 import entity.Country;
 import entity.Item;
-import entity.Rule;
+import entity.Permission;
 import entity.User;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -27,7 +27,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
     private UserService _dbService = null;
     private List<User> _users = new ArrayList<>();
     private javax.swing.DefaultListModel ruleListModel; 
-    private List<Rule> ruleList = new ArrayList<>();
+    private List<Permission> ruleList = new ArrayList<>();
     private List<Country> countries = new ArrayList<>();
     /**
      * Creates new form ItemView
@@ -98,7 +98,6 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
         txtboxSearch = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        buttonDelete = new javax.swing.JButton();
         buttonEdit = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         panelContactInfo = new javax.swing.JPanel();
@@ -222,8 +221,6 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        buttonDelete.setText("Delete");
-
         buttonEdit.setText("Edit");
         buttonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,10 +296,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(buttonEdit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buttonDelete)))
+                            .addComponent(buttonEdit))
                         .addGap(358, 358, 358))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -320,9 +314,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonDelete)
-                    .addComponent(buttonEdit))
+                .addComponent(buttonEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -475,7 +467,7 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
         User user = this._users.get(row);
         String ruleString="";
 
-        for(Rule rule : user.getRules()){
+        for(Permission rule : user.getRules()){
             ruleString +=rule.getName()+"\n";
         }
 
@@ -498,7 +490,6 @@ public class UserInternalFrame extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAddSupplier;
     private javax.swing.JButton buttonClose;
-    private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel jLabel1;

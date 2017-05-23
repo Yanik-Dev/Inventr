@@ -30,8 +30,8 @@ public class User extends Person implements Serializable{
     private String password;
     private String salt;
     private Status status;
-    @ManyToMany(targetEntity=Rule.class)
-    private List<Rule> rules;
+    @ManyToMany(targetEntity=Permission.class)
+    private List<Permission> rules;
     @Transient 
     private boolean isConnected;
     /**
@@ -94,14 +94,14 @@ public class User extends Person implements Serializable{
     /**
      * @return the rules
      */
-    public List<Rule> getRules() {
+    public List<Permission> getRules() {
         return rules;
     }
 
     /**
      * @param rules the roles to set
      */
-    public void setRules(List<Rule> rules) {
+    public void setRules(List<Permission> rules) {
         this.rules = rules;
     }
 

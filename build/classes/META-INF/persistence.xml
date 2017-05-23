@@ -16,9 +16,10 @@
     <class>entity.UserRole</class>
     <class>entity.Email</class>
     <class>entity.PhoneNumber</class>
-    <class>entity.Rule</class>
     <class>entity.Category</class>
     <class>sockets.ClientThread</class>
+    <class>entity.Permission</class>
+    <class>services.InitDBService</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/inventr_db?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

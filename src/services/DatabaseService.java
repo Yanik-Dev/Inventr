@@ -89,7 +89,7 @@ public class  DatabaseService implements IDbService{
      * @param type Entity class
      * @return an Entity object
      */
-    public <I, E> E findOne(I id, Class<E> type){
+    public  <I, E> E findOne(I id, Class<E> type){
         E obj = null;
         try{
             obj = Database.getEMInstance().find(type, id);

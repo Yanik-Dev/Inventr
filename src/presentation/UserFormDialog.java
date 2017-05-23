@@ -8,7 +8,7 @@ package presentation;
 import common.FormHelper;
 import common.MessageBox;
 import constant.Status;
-import entity.Rule;
+import entity.Permission;
 import entity.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,8 @@ import services.UserService;
  */
 public class UserFormDialog extends javax.swing.JDialog {
 
-    List<Rule> _assignedRules = new ArrayList<>();
-    List<Rule> _availableRules = new ArrayList<>();  
+    List<Permission> _assignedRules = new ArrayList<>();
+    List<Permission> _availableRules = new ArrayList<>();  
     User _user = null;
     UserService _dbService = null;
     boolean isUpdate = false;
@@ -57,15 +57,15 @@ public class UserFormDialog extends javax.swing.JDialog {
     public void getRules(){
         this.availableRulesList.clear();
         this._dbService = new UserService();
-        this._availableRules = this._dbService.findAll(Rule.class);
-        for(Rule category : this._availableRules){
+        this._availableRules = this._dbService.findAll(Permission.class);
+        for(Permission category : this._availableRules){
             this.availableRulesList.addElement(category.getName());
         }
         this.listAvailableRules.setModel(this.availableRulesList);
     }
     
     public void assignRules(int index){
-         Rule rule = this._availableRules.get(index);
+         Permission rule = this._availableRules.get(index);
          this._assignedRules.add(rule);
         ((DefaultListModel)this.listAssignedRules.getModel()).addElement(rule.getName());
         ((DefaultListModel)this.listAvailableRules.getModel()).remove(index);
@@ -74,7 +74,7 @@ public class UserFormDialog extends javax.swing.JDialog {
     }
     
     public void removeRules(int index){
-        Rule rule = this._assignedRules.get(index);
+        Permission rule = this._assignedRules.get(index);
         this._availableRules.add(rule);
         ((DefaultListModel)this.listAvailableRules.getModel()).addElement(rule.getName());
         ((DefaultListModel)this.listAssignedRules.getModel()).remove(index);
@@ -87,7 +87,7 @@ public class UserFormDialog extends javax.swing.JDialog {
         this.textBoxLastName.setText(user.getLastname());
         this.textBoxUsername.setText(user.getUsername());
 
-        for(Rule rule : user.getRules()){
+        for(Permission rule : user.getRules()){
             this._assignedRules.add(rule);
             this.assignedRulesList.addElement(rule.getName());
             int index = this.availableRulesList.indexOf(rule.getName());
@@ -265,10 +265,10 @@ public class UserFormDialog extends javax.swing.JDialog {
         jScrollPane3.setViewportView(listAssignedRules);
 
         labelItemName2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelItemName2.setText("Assigned Rules");
+        labelItemName2.setText("Assigned Permissions");
 
         labelItemName3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelItemName3.setText("Available Rules");
+        labelItemName3.setText("Available Permissions");
 
         buttonAssign.setText("Assign");
         buttonAssign.addActionListener(new java.awt.event.ActionListener() {
@@ -346,9 +346,9 @@ public class UserFormDialog extends javax.swing.JDialog {
                         .addComponent(textBoxLastName, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelItemName2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelItemName2))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         panelContentLayout.setVerticalGroup(

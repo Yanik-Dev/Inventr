@@ -157,7 +157,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTabbedPane1" pref="1199" max="32767" attributes="0"/>
+                  <Component id="jTabbedPane1" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -205,9 +205,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="buttonEdit" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="buttonDelete" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="1056" max="-2" attributes="0"/>
+                                  <EmptySpace min="1056" pref="1133" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -235,10 +233,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="375" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="buttonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="buttonEdit" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="buttonEdit" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator1" min="-2" pref="7" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -326,11 +321,6 @@
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator1">
                 </Component>
-                <Component class="javax.swing.JButton" name="buttonDelete">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Delete"/>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JButton" name="buttonEdit">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Edit"/>
@@ -377,9 +367,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="buttonEdit1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="buttonDelete1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="1056" max="-2" attributes="0"/>
+                                  <EmptySpace min="1056" pref="1133" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -407,10 +395,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="359" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="buttonDelete1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="buttonEdit1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="buttonEdit1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator3" min="-2" pref="7" max="-2" attributes="0"/>
                           <EmptySpace pref="73" max="32767" attributes="0"/>
@@ -503,14 +488,6 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator3">
-                </Component>
-                <Component class="javax.swing.JButton" name="buttonDelete1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Delete"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDelete1ActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="buttonEdit1">
                   <Properties>

@@ -250,23 +250,28 @@ INSERT INTO `countries`(COUNTRY_ID, code, NAME) VALUES (null, 'ZR', 'Zaire');
 INSERT INTO `countries`(COUNTRY_ID, code, NAME) VALUES (null, 'ZM', 'Zambia');
 INSERT INTO `countries`(COUNTRY_ID, code, NAME) VALUES (null, 'ZW', 'Zimbabwe');
 
-INSERT INTO `rule` (Name) VALUES ('View Dashboard');
-INSERT INTO `rule` (Name) VALUES ('View Transaction Logs');
-INSERT INTO `rule` (Name) VALUES ('View Suppliers');
-INSERT INTO `rule` (Name) VALUES ('Create Items');
-INSERT INTO `rule` (Name) VALUES ('Update Items');
-INSERT INTO `rule` (Name) VALUES ('Delete Items');
-INSERT INTO `rule` (Name) VALUES ('Create Suppliers');
-INSERT INTO `rule` (Name) VALUES ('Update Suppliers');
-INSERT INTO `rule` (Name) VALUES ('Delete Suppliers');
-INSERT INTO `rule` (Name) VALUES ('Manage Users');
-INSERT INTO `rule` (Name) VALUES ('Request Items');
-INSERT INTO `rule` (Name) VALUES ('Add Receivables');
-INSERT INTO `rule` (Name) VALUES ('Create Units');
-INSERT INTO `rule` (Name) VALUES ('Update Units');
-INSERT INTO `rule` (Name) VALUES ('Delete Units');
-INSERT INTO `rule` (Name) VALUES ('Create Locations');
-INSERT INTO `rule` (Name) VALUES ('Update Locations');
-INSERT INTO `rule` (Name) VALUES ('Delete Locations');
-INSERT INTO `rule` (Name) VALUES ('Create  Categories');
-INSERT INTO `rule` (Name) VALUES ('Update Categories');
+INSERT INTO `permission` (Name) VALUES ('View Dashboard');
+INSERT INTO `permission` (Name) VALUES ('View Transaction Logs');
+INSERT INTO `permission` (Name) VALUES ('Manage Items');
+INSERT INTO `permission` (Name) VALUES ('Manage Suppliers');
+INSERT INTO `permission` (Name) VALUES ('Manage Users');
+INSERT INTO `permission` (Name) VALUES ('Request Items');
+INSERT INTO `permission` (Name) VALUES ('Add Receivables');
+INSERT INTO `permission` (Name) VALUES ('Manage Units');
+INSERT INTO `permission` (Name) VALUES ('Manage Locations');
+INSERT INTO `permission` (Name) VALUES ('Manage  Categories');
+
+
+INSERT INTO `users` (ID,FIRSTNAME, LASTNAME, PASSWORD, SALT,STATUS, USERNAME) 
+VALUES (1,'super', 'user', '78991f361351c009840f3d16acea8e35caa53e56200c55a19aa8c1595ecacd0d126e9f583402d04d8b2f0d8fa5f0d9a560009819a2463d5e6d55d8a22f748a35', '[B@4f023edb',1, 'admin');
+
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,1);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,2);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,3);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,4);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,5);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,6);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,7);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,8);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,9);
+INSERT INTO `users_permission` (`User_ID`, `rules_ID`) values(1,10);
